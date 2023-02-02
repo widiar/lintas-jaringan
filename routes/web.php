@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.index');
+});
+
+Route::get('/cek', function () {
+    return view('site.cek');
 });
