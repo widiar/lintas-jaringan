@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('site.index');
 });
 
-Route::get('/cek', function () {
-    return view('site.cek');
+Route::get('/admin', function () {
+    return view('admin.index');
 });

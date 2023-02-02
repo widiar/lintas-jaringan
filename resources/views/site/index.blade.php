@@ -22,13 +22,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-onix-digital.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
-    <!--
-
-TemplateMo 565 Onix Digital
-
-https://templatemo.com/tm-565-onix-digital
-
--->
 </head>
 
 <body>
