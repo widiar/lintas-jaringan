@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use DataTables;
 use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
-
-use function PHPUnit\Framework\isNull;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoleUserController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $roles = Role::get(['id', 'name']);
+            $roles = Role::where('name', '<>', 'super admin')->get(['id', 'name']);
             return DataTables::of($roles)
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {

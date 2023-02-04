@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +25,18 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Role::create(['name' => 'Pelanggan']);
+        $role = Role::create(['name' => 'super admin']);
+        $user = User::create([
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin')
+        ]);
+        $user->assignRole($role);
 
-        Permission::create(['name' => 'create_user']);
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        Permission::firstOrCreate(['name' => 'create_user']);
         Permission::create(['name' => 'view_user']);
         Permission::create(['name' => 'edit_user']);
         Permission::create(['name' => 'delete_user']);
