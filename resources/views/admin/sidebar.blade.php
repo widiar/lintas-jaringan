@@ -47,8 +47,8 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.users') }}"
-                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.users') ? ' active' : '' }}">
+                    <a href="{{ route('admin.user') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.user') ? ' active' : '' }}">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Kelola User

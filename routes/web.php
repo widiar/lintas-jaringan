@@ -24,6 +24,7 @@ Route::get('/', function () {
 Route::get('login', function () {
     return view('auth.login');
 })->name('login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
 Route::middleware('auth')->group(function () {
@@ -35,10 +36,16 @@ Route::middleware('auth')->group(function () {
             // manage users
             Route::controller(UserController::class)->group(function () {
                 Route::prefix('users/')->group(function () {
-                    Route::get('', 'index')->name('users');
-                    Route::get('create', 'index')->name('users.create');
+                    Route::get('', 'index')->name('user');
+                    Route::get('create', 'create')->name('user.create');
+                    Route::post('store', 'store')->name('user.store');
+                    Route::get('show/{id}', 'show')->name('user.show');
+                    Route::get('edit/{id}', 'edit')->name('user.edit');
+                    Route::put('update/{id}', 'update')->name('user.update');
+                    Route::delete('delete/{id}', 'delete')->name('user.destroy');
                 });
             });
+            //manage roles
             Route::controller(RoleUserController::class)->group(function () {
                 Route::prefix('roles/users/')->group(function () {
                     Route::get('', 'index')->name('roles');

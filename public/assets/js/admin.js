@@ -38,6 +38,11 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+    $('.select2').select2({
+        theme: 'bootstrap4',
+        width: '100%',
+        placeholder: 'Please select'
+    })
     $("body").on("click", ".deleteData", function (e) {
         e.preventDefault();
         var text = 'Anda akan menghapus data ini';

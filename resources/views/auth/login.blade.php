@@ -62,6 +62,7 @@
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
+                    <input type="hidden" name="next" value="{{ request()->get('next') }}">
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">

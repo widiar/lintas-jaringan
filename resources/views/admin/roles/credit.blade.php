@@ -76,7 +76,11 @@
 @endsection
 
 @section('content-header')
-Tambah Roles
+@if(Route::current()->getName() == 'admin.roles.edit')
+Edit
+@else
+Tambah
+@endif Roles
 @endsection
 
 @section('script')
