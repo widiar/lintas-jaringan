@@ -55,13 +55,44 @@ class RoleUserController extends Controller
         $role = Role::find(Hashids::decode($id))->first();
         if (is_null($role)) abort(404);
         $permissions = $role->getPermissionNames()->toArray();
-        return view('admin.roles.show', compact('role', 'permissions'));
+        $groupPermis = $this->getGroupPermission();
+        return view('admin.roles.show', compact('role', 'permissions', 'groupPermis'));
+    }
+
+    private function getGroupPermission()
+    {
+        $allPerm = Permission::orderBy('id', 'asc')->get(['name']);
+        $permis = [];
+        $groupPermis = [];
+        $cek = explode('_', $allPerm[0]->name, 2)[1];
+        // bagi permission
+        foreach ($allPerm as $i => $perm) {
+            $exp = explode('_', $perm->name, 2)[1];
+            if ($cek == $exp) {
+                array_push($permis, $perm->name);
+            } else {
+                array_push($groupPermis, [
+                    'name' => ucwords(str_replace("_", " ", explode("_", $allPerm[$i - 1]->name, 2)[1])),
+                    'permission' => $permis
+                ]);
+                $permis = [];
+                array_push($permis, $perm->name);
+                $cek = $exp;
+            }
+        }
+        //last permission loop
+        array_push($groupPermis, [
+            'name' => ucwords(str_replace("_", " ", explode("_", $allPerm[$i]->name, 2)[1])),
+            'permission' => $permis
+        ]);
+        return $groupPermis;
     }
 
     public function create()
     {
         $permissions = [];
-        return view('admin.roles.credit', compact('permissions'));
+        $groupPermis = $this->getGroupPermission();
+        return view('admin.roles.credit', compact('permissions', 'groupPermis'));
     }
 
     public function store(Request $request)
@@ -83,7 +114,8 @@ class RoleUserController extends Controller
         $role = Role::find(Hashids::decode($id))->first();
         if (is_null($role)) abort(404);
         $permissions = $role->getPermissionNames()->toArray();
-        return view('admin.roles.credit', compact('role', 'permissions', 'id'));
+        $groupPermis = $this->getGroupPermission();
+        return view('admin.roles.credit', compact('role', 'permissions', 'id', 'groupPermis'));
     }
 
     public function update(Request $request, $id)

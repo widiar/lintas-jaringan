@@ -26,15 +26,12 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Permission</th>
-                                <th>Lihat</th>
-                                <th>Tambah</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Nama Permission</th>
+                                <th>Hak Akses</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td>
+                            {{-- <td>
                                 <h5>Kelola User</h5>
                             </td>
                             <td>
@@ -60,7 +57,30 @@
                                     <input type="checkbox" {{ in_array('delete_user', $permissions) ? 'checked' : '' }}
                                         name="permission[]" value="delete_user">
                                 </li>
-                            </td>
+                            </td> --}}
+                            @foreach ($groupPermis as $item)
+                            <tr>
+                                <td>
+                                    <h4>{{ $item['name'] }}</h4>
+                                </td>
+                                <td>
+                                    @foreach ($item['permission'] as $perm)
+                                    <li class="list-inline-item mr-2">
+                                        <div class="card" style="max-width: 10rem">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item font-weight-bold">{{
+                                                    ucwords(str_replace("_"," ",explode("_",$perm,2)[0])) }}</li>
+                                                <li class="list-group-item text-center">
+                                                    <input type="checkbox" {{ in_array($perm, $permissions) ? 'checked'
+                                                        : '' }} name="permission[]" value="{{ $perm }}">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <button type="submit" class="btn btn-primary float-right mx-2">Save</button>

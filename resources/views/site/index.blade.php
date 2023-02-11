@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <title>Onix Digital Marketing HTML5 Template</title>
+    <title>Lintas Jaringan</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -59,7 +59,7 @@
                             <li class="scroll-to-section"><a href="#video">Videos</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                             <li class="scroll-to-section">
-                                <div class="main-red-button-hover"><a href="#contact">Contact Us Now</a></div>
+                                <div class="main-red-button-hover"><a href="{{ route('login') }}">Login</a></div>
                             </li>
                         </ul>
                         <a class='menu-trigger'>

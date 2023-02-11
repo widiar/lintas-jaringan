@@ -6,11 +6,13 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+                @can('create_user')
                 <a href="{{ route('admin.user.create') }}">
                     <button class="btn btn-sm btn-primary mb-3">
                         <i class="fa fa-plus"></i> Tambah User
                     </button>
                 </a>
+                @endcan
 
                 <table class="table table-bordered table-striped" id="datatables">
                     <thead>
@@ -35,6 +37,8 @@
 
 @section('script')
 <script>
+    let user = @json(auth()->user()->can('print_user'));
+    // if (user) alert('ok')
     $("#datatables").DataTable({
         responsive: true,
         lengthChange: true,
@@ -58,7 +62,7 @@
         ],
         order: [[1, 'asc']],
         dom: 'Bfrtip',
-        buttons: [
+        buttons: user ? [
             {
                 extend: 'print',
                 customize: function (win) {
@@ -84,7 +88,7 @@
                 }
             },
             'copy'
-        ]
+        ] : []
     });
 </script>
 @endsection

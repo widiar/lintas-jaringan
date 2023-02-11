@@ -18,7 +18,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::where('id', '<>', Auth::user()->id)->get();
+            if (Auth::user()->hasRole('super admin'))
+                $users = User::where('id', '<>', Auth::user()->id)->get();
+            else {
+                $users = User::role('Pelanggan')->get();
+            }
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
@@ -44,12 +48,8 @@ class UserController extends Controller
                     $urlShow    = ' <a href="' . route('admin.user.show', Hashids::encode($row['id'])) . '" class="btn btn-primary btn-xs"><i class="fas fa-eye right"></i> View</a> ';
                     $urlEdit    = ' <a href="' . route('admin.user.edit', Hashids::encode($row['id'])) . '" class="btn btn-warning btn-xs"><i class="fas fa-pen right"></i> Edit</a> ';
                     $urlDestroy = ' <a href="' . route('admin.user.destroy', Hashids::encode($row['id'])) . '" class="btn btn-danger btn-xs deleteData"><i class="fas fa-trash right"></i> Delete</a> ';
-
-                    // $btn = (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->read_act ? $urlShow : '') .
-                    //     (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->update_act ? $urlEdit : '') .
-                    //     (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->delete_act ? $urlDestroy : '');
-                    // return $btn;
-                    return $urlShow . $urlEdit . $urlDestroy;
+                    $btn = (auth()->user()->can('view_user') ? $urlShow : '') . (auth()->user()->can('edit_user') ? $urlEdit : '') . (auth()->user()->can('delete_user') ? $urlDestroy : '');
+                    return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -133,7 +133,7 @@ class UserController extends Controller
         return to_route('admin.user')->with('success', 'Data Berhasil Dirubah!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::with('pelanggan')->where('id', Hashids::decode($id))->firstOrFail();
         if ($user->pelanggan) $user->pelanggan->delete();

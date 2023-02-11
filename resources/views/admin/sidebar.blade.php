@@ -23,44 +23,59 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                <li
+                    class="nav-item {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>
-                            Starter Pages
+                            Master Data
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @can('view_user')
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Active Page</p>
+                            <a href="{{ route('admin.user') }}"
+                                class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.user') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Kelola User
+                                </p>
                             </a>
                         </li>
+                        @endcan
+                        @can('view_role_user')
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inactive Page</p>
+                            <a href="{{ route('admin.roles') }}"
+                                class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.roles') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-cog"></i>
+                                {{-- <i class="fas fa-chalkboard-teacher"></i> --}}
+                                <p>
+                                    Kelola Roles User
+                                </p>
                             </a>
                         </li>
+                        @endcan
+                        @role('super admin')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.permission.create') }}"
+                                class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.permission') ? ' active' : '' }}">
+                                <i class="nav-icon fas fa-fingerprint"></i>
+                                <p>
+                                    Tambah Permissions
+                                </p>
+                            </a>
+                        </li>
+                        @endrole
                     </ul>
                 </li>
+                <li class="nav-hr"></li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.user') }}"
-                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.user') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
+                    <a href="{{ route('logout') }}" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
-                            Kelola User
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.roles') }}"
-                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.roles') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Kelola Roles User
+                            Logout
                         </p>
                     </a>
                 </li>

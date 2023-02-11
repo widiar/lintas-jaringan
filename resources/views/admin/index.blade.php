@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
+    <style>
+        .nav-hr {
+            border-bottom: 1px solid #4f5962;
+        }
+    </style>
     @yield('css')
 </head>
 

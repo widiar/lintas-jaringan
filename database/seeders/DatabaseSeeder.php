@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         Role::create(['name' => 'Pelanggan']);
         $role = Role::create(['name' => 'super admin']);
         $user = User::create([
@@ -35,10 +36,9 @@ class DatabaseSeeder extends Seeder
         $user->assignRole($role);
 
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::firstOrCreate(['name' => 'create_user']);
-        Permission::create(['name' => 'view_user']);
-        Permission::create(['name' => 'edit_user']);
-        Permission::create(['name' => 'delete_user']);
+        // Permission::firstOrCreate(['name' => 'create_user']);
+        // Permission::create(['name' => 'view_user']);
+        // Permission::create(['name' => 'edit_user']);
+        // Permission::create(['name' => 'delete_user']);
     }
 }

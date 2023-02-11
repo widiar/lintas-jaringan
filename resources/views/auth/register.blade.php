@@ -29,14 +29,10 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{{ asset('assets/images/img-01.png') }}" alt="IMG">
-                </div>
-
-                <form class="login100-form validate-form" method="POST" action="{{ route('login.post') }}">
+                <form class="login100-form validate-form" method="POST" action="{{ route('register.post') }}">
                     @csrf
                     <span class="login100-form-title">
-                        Member Login
+                        Member Register
                     </span>
                     @if(session('success'))
                     <div class="alert alert-success">
@@ -47,11 +43,49 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <div class="wrap-input100 validate-input">
-                        <input autocomplete="off" class="input100" type="text" name="username" placeholder="Username">
+                    <div class="wrap-input100 validate-input @error('username') alert-validate @enderror"
+                        @error('username') data-validate="{{ $message }}" @enderror>
+                        <input autocomplete="off" class="input100" type="text" name="username" placeholder="Username"
+                            value="{{ old('username') }}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input @error('email') alert-validate @enderror" @error('email')
+                        data-validate="{{ $message }}" @enderror>
+                        <input autocomplete="off" class="input100" type="email" name="email" placeholder="Email"
+                            value="{{ old('email') }}">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input @error('nama') alert-validate @enderror" @error('nama')
+                        data-validate="{{ $message }}" @enderror>
+                        <input autocomplete="off" class="input100" type="text" name="nama" placeholder="Nama Lengkap"
+                            value="{{ old('nama') }}">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input @error('alamat') alert-validate @enderror" @error('alamat')
+                        data-validate="{{ $message }}" @enderror>
+                        <input autocomplete="off" class="input100" type="text" name="alamat" placeholder="Alamat"
+                            value="{{ old('alamat') }}">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-map" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input @error('nohp') alert-validate @enderror" @error('nohp')
+                        data-validate="{{ $message }}" @enderror>
+                        <input autocomplete="off" class="input100" type="text" name="nohp" placeholder="No Handphone"
+                            value="{{ old('nohp') }}">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-mobile" aria-hidden="true"></i>
                         </span>
                     </div>
 
@@ -62,7 +96,6 @@
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <input type="hidden" name="next" value="{{ request()->get('next') }}">
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
@@ -80,12 +113,16 @@
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="{{ route('register') }}">
-                            Create your Account
-                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        <a class="txt2" href="{{ route('login') }}">
+                            <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
+                            Login
                         </a>
                     </div>
                 </form>
+                <div class="login100-pic js-tilt" style="margin-top: 120px" data-tilt>
+                    <img src="{{ asset('assets/images/img-01.png') }}" alt="IMG">
+                </div>
+
             </div>
         </div>
     </div>
@@ -123,11 +160,23 @@
                 $(element).parent().removeClass('alert-validate');
             }
         });
+        $.validator.addMethod("indonesianPhone", function(value, element) {
+            return this.optional(element) || /^0\d{10}$/.test(value);
+        }, "Masukkan nomer hp yang valid");
+
         $(document).ready(function(){
             $('.validate-form').validate({
                 rules: {
                     username: 'required',
+                    nama: 'required',
+                    alamat: 'required',
+                    nohp: {
+                        required: true,
+                        number: true,
+                        indonesianPhone: true
+                    },
                     password: 'required',
+                    email: 'required'
                 },
             })
         })

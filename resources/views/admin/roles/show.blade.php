@@ -13,14 +13,40 @@
                     <thead>
                         <tr>
                             <th>Permission</th>
-                            <th>Lihat</th>
-                            <th>Tambah</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Hak Akses</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <td>
+                        @foreach ($groupPermis as $item)
+                        <tr>
+                            <td>
+                                <h4>{{ $item['name'] }}</h4>
+                            </td>
+                            <td>
+                                @foreach ($item['permission'] as $perm)
+                                <li class="list-inline-item mr-2">
+                                    <div class="card" style="max-width: 10rem">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item font-weight-bold">{{
+                                                ucwords(str_replace("_"," ",explode("_",$perm,2)[0])) }}</li>
+                                            <li class="list-group-item text-center">
+                                                <span
+                                                    class="badge badge-pill{{ in_array($perm, $permissions) ? ' badge-success' : ' badge-danger' }}">
+                                                    @if(in_array($perm, $permissions))
+                                                    <i class="fa fa-check"></i>
+                                                    @else
+                                                    <i class="fa fa-times"></i>
+                                                    @endif
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </td>
+                        </tr>
+                        @endforeach
+                        {{-- <td>
                             <h5>Kelola User</h5>
                         </td>
                         <td>
@@ -70,7 +96,7 @@
                                     @endif
                                 </span>
                             </li>
-                        </td>
+                        </td> --}}
                     </tbody>
                 </table>
                 <a href="{{ url()->previous() }}">
