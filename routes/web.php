@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('site.index');
-})->name('home');
+Route::get('/', [SiteController::class, 'index'])->name('home');
 
 Route::get('login', function () {
     return view('auth.login');
@@ -69,6 +69,18 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
                     Route::get('edit/{id}', 'edit')->name('roles.edit')->middleware(['permission:edit_role_user']);
                     Route::put('update/{id}', 'update')->name('roles.update')->middleware(['permission:edit_role_user']);
                     Route::delete('delete/{id}', 'delete')->name('roles.destroy')->middleware(['permission:delete_role_user']);
+                });
+            });
+            //manage banner
+            Route::controller(BannerController::class)->group(function () {
+                Route::prefix('banner/')->group(function () {
+                    Route::get('', 'index')->name('banner')->middleware(['permission:view_banner']);
+                    Route::get('create', 'create')->name('banner.create')->middleware(['permission:create_banner']);
+                    Route::post('store', 'store')->name('banner.store')->middleware(['permission:create_banner']);
+                    Route::get('show/{id}', 'show')->name('banner.show')->middleware(['permission:detail_banner']);
+                    Route::get('edit/{id}', 'edit')->name('banner.edit')->middleware(['permission:edit_banner']);
+                    Route::put('update/{id}', 'update')->name('banner.update')->middleware(['permission:edit_banner']);
+                    Route::delete('delete/{id}', 'destroy')->name('banner.destroy')->middleware(['permission:delete_banner']);
                 });
             });
         });

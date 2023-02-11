@@ -22,7 +22,16 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                <li class="nav-item">
+                    <a href="{{ route('admin.banner') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.banner') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-chalkboard"></i>
+                        <p>
+                            Banner
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-hr"></li>
                 <li
                     class="nav-item {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' menu-open' : '' }}">
                     <a href="#"
