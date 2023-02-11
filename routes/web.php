@@ -32,6 +32,7 @@ Route::get('register', function () {
     return view('auth.register');
 })->name('register');
 Route::post('register', [AuthController::class, 'register'])->name('register.post');
+Route::get('user/activate', [AuthController::class, 'activate'])->name('activate.user');
 
 
 Route::middleware(['auth', 'notPelanggan'])->group(function () {

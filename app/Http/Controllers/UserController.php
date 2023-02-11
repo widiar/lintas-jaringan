@@ -48,7 +48,7 @@ class UserController extends Controller
                     $urlShow    = ' <a href="' . route('admin.user.show', Hashids::encode($row['id'])) . '" class="btn btn-primary btn-xs"><i class="fas fa-eye right"></i> View</a> ';
                     $urlEdit    = ' <a href="' . route('admin.user.edit', Hashids::encode($row['id'])) . '" class="btn btn-warning btn-xs"><i class="fas fa-pen right"></i> Edit</a> ';
                     $urlDestroy = ' <a href="' . route('admin.user.destroy', Hashids::encode($row['id'])) . '" class="btn btn-danger btn-xs deleteData"><i class="fas fa-trash right"></i> Delete</a> ';
-                    $btn = (auth()->user()->can('view_user') ? $urlShow : '') . (auth()->user()->can('edit_user') ? $urlEdit : '') . (auth()->user()->can('delete_user') ? $urlDestroy : '');
+                    $btn = (auth()->user()->can('detail_user') ? $urlShow : '') . (auth()->user()->can('edit_user') ? $urlEdit : '') . (auth()->user()->can('delete_user') ? $urlDestroy : '');
                     return $btn;
                 })
                 ->rawColumns(['action'])

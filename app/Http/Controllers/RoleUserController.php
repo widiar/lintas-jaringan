@@ -37,11 +37,9 @@ class RoleUserController extends Controller
                     $urlEdit    = ' <a href="' . route('admin.roles.edit', Hashids::encode($row['id'])) . '" class="btn btn-warning btn-xs"><i class="fas fa-pen right"></i> Edit</a> ';
                     $urlDestroy = ' <a href="' . route('admin.roles.destroy', Hashids::encode($row['id'])) . '" class="btn btn-danger btn-xs deleteData"><i class="fas fa-trash right"></i> Delete</a> ';
 
-                    // $btn = (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->read_act ? $urlShow : '') .
-                    //     (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->update_act ? $urlEdit : '') .
-                    //     (count(auth()->user()->userPermission) == 0 || auth()->user()->currentPagePermission(Route::currentRouteName())->delete_act ? $urlDestroy : '');
-                    // return $btn;
-                    return $urlShow . $urlEdit . $urlDestroy;
+                    $btn = (auth()->user()->can('detail_roles_user') ? $urlShow : '') . (auth()->user()->can('edit_roles_user') ? $urlEdit : '') . (auth()->user()->can('delete_roles_user') ? $urlDestroy : '');
+                    return $btn;
+                    // return $urlShow . $urlEdit . $urlDestroy;
                 })
                 ->rawColumns(['action'])
                 ->make(true);

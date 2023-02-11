@@ -22,6 +22,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-onix-digital.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+
+    <style>
+        .text-sm {
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,39 +45,7 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
-                            <img src="assets/images/logo.png">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#about">About</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
-                            <li class="scroll-to-section"><a href="#video">Videos</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
-                            <li class="scroll-to-section">
-                                <div class="main-red-button-hover"><a href="{{ route('login') }}">Login</a></div>
-                            </li>
-                        </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ***** Header Area End ***** -->
+    @include('site.header')
 
     <div class="main-banner" id="top">
         <div class="container">
@@ -85,14 +59,6 @@
                                     <h2>Build <em>your website</em> the best in <span>SEO</span>?</h2>
                                     <p>This is a professional looking HTML Bootstrap 5 website template brought to you
                                         by TemplateMo website.</p>
-                                    <div class="down-buttons">
-                                        <div class="main-blue-button-hover">
-                                            <a href="#contact">Message Us Now</a>
-                                        </div>
-                                        <div class="call-button">
-                                            <a href="#"><i class="fa fa-phone"></i> 010-020-0340</a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="item header-text">
                                     <h6>Online Marketing</h6>
@@ -273,188 +239,6 @@
         </div>
     </div>
 
-    <div id="portfolio" class="our-portfolio section">
-        <div class="portfolio-left-dec">
-            <img src="assets/images/portfolio-left-dec.png" alt="">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="section-heading">
-                        <h2>Our Recent <em>Projects</em> &amp; Case Studies <span>for Clients</span></h2>
-                        <span>Our Portfolio</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="owl-carousel owl-portfolio">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-01.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a rel="sponsored" href="https://templatemo.com/tm-564-plot-listing"
-                                            target="_parent">
-                                            <h4>First Project</h4>
-                                        </a>
-                                        <span>Plot Listing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-02.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Project Two</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-03.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a rel="sponsored" href="https://templatemo.com/tm-562-space-dynamic"
-                                            target="_parent">
-                                            <h4>Third Project</h4>
-                                        </a>
-                                        <span>Space Dynamic SEO</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-04.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Project Four</h4>
-                                        </a>
-                                        <span>Website Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-01.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Fifth Project</h4>
-                                        </a>
-                                        <span>Digital Assets</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-02.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Sixth Project</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-03.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>7th Project</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-04.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>8th Project</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-01.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>9th Project</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-02.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Project Ten</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-03.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>Project Eleven</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/images/portfolio-04.jpg" alt="">
-                                <div class="hover-effect">
-                                    <div class="inner-content">
-                                        <a href="#">
-                                            <h4>12th Project</h4>
-                                        </a>
-                                        <span>SEO &amp; Marketing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="pricing" class="pricing-tables">
         <div class="tables-left-dec">
             <img src="assets/images/tables-left-dec.png" alt="">
@@ -483,9 +267,11 @@
                             <li>20 SEO checkups</li>
                             <li>Basic Support</li>
                         </ul>
-                        <div class="main-blue-button-hover">
+                        <div class="main-blue-button-hover mb-3">
                             <a href="#">Get Started</a>
                         </div>
+                        <a href="" class="text-sm">More Pricing <i class="fa fa-long-arrow-right m-l-5"
+                                aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -517,29 +303,6 @@
                         </ul>
                         <div class="main-blue-button-hover">
                             <a href="#">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="subscribe" class="subscribe">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-content">
-                        <div class="row">
-                            <div class="col-lg-10 offset-lg-1">
-                                <h2>Know Your Website SEO Score by Email</h2>
-                                <form id="subscribe" action="" method="get">
-                                    <input type="text" name="website" id="website" placeholder="Your Website URL"
-                                        required="">
-                                    <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                        placeholder="Your Email" required="">
-                                    <button type="submit" id="form-submit" class="main-button ">Subscribe</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>

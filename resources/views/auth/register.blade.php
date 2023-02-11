@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login V1</title>
+    <title>Registrasi</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -28,7 +28,7 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100">
+            <div class="wrap-login100" style="padding-top: 75px; padding-bottom: 20px">
                 <form class="login100-form validate-form" method="POST" action="{{ route('register.post') }}">
                     @csrf
                     <span class="login100-form-title">
@@ -99,20 +99,11 @@
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
-                            Login
+                            Daftar
                         </button>
                     </div>
 
-                    <div class="text-center p-t-12">
-                        <span class="txt1">
-                            Forgot
-                        </span>
-                        <a class="txt2" href="#">
-                            Username / Password?
-                        </a>
-                    </div>
-
-                    <div class="text-center p-t-136">
+                    <div class="text-center p-t-136" style="padding-top: 80px">
                         <a class="txt2" href="{{ route('login') }}">
                             <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
                             Login
@@ -178,6 +169,10 @@
                     password: 'required',
                     email: 'required'
                 },
+                submitHandler: function(form) {
+                    $('.login100-form-btn').attr('disabled', 'disabled')
+                    $(form).submit();
+                }
             })
         })
     </script>
