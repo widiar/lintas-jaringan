@@ -31,6 +31,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.service') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.service') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            Layanan
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-hr"></li>
                 <li
                     class="nav-item {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' menu-open' : '' }}">

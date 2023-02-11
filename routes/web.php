@@ -5,20 +5,10 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', [SiteController::class, 'index'])->name('home');
 
@@ -81,6 +71,18 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
                     Route::get('edit/{id}', 'edit')->name('banner.edit')->middleware(['permission:edit_banner']);
                     Route::put('update/{id}', 'update')->name('banner.update')->middleware(['permission:edit_banner']);
                     Route::delete('delete/{id}', 'destroy')->name('banner.destroy')->middleware(['permission:delete_banner']);
+                });
+            });
+            //manage service
+            Route::controller(ServiceController::class)->group(function () {
+                Route::prefix('service/')->group(function () {
+                    Route::get('', 'index')->name('service')->middleware(['permission:view_service']);
+                    Route::get('create', 'create')->name('service.create')->middleware(['permission:create_service']);
+                    Route::post('store', 'store')->name('service.store')->middleware(['permission:create_service']);
+                    Route::get('show/{id}', 'show')->name('service.show')->middleware(['permission:detail_service']);
+                    Route::get('edit/{id}', 'edit')->name('service.edit')->middleware(['permission:edit_service']);
+                    Route::put('update/{id}', 'update')->name('service.update')->middleware(['permission:edit_service']);
+                    Route::delete('delete/{id}', 'destroy')->name('service.destroy')->middleware(['permission:delete_service']);
                 });
             });
         });

@@ -29,6 +29,12 @@
         .nav-hr {
             border-bottom: 1px solid #4f5962;
         }
+
+        .img-icon {
+            width: 45px;
+            height: 45px;
+            object-fit: fill;
+        }
     </style>
     @yield('css')
 </head>

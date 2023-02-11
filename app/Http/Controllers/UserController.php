@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\UsersDataTable;
 use App\Models\Pelanggan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -79,7 +80,8 @@ class UserController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $password
+            'password' => $password,
+            'email_verified_at' => Carbon::now()
         ]);
         $user->assignRole($request->role);
 
