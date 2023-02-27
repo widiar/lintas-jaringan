@@ -40,6 +40,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.paket') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.paket') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            Paket
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-hr"></li>
                 <li
                     class="nav-item {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' menu-open' : '' }}">

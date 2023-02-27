@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/gauge.css') }}">
+
     <style>
         .text-sm {
             font-size: 14px;
@@ -190,8 +192,11 @@
                 <div class="col-lg-4">
                     <div class="item first-item">
                         <h4>Starter Plan</h4>
-                        <em>$160/mo</em>
-                        <span>$140</span>
+                        <em></em>
+                        <span>Rp 1.000.000</span>
+                        <div class="GaugeMeter" data-width="15" data-percent="7" data-text="10" data-label="MB/s"
+                            data-style="Arch">
+                        </div>
                         <ul>
                             <li>10 Projects</li>
                             <li>100 GB space</li>
@@ -380,9 +385,12 @@
     <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
     <script src="{{ asset('assets/js/animation.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.js') }}"></script>
+    <script src="{{ asset('assets/js/GaugeMeter.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <script>
+        $(".GaugeMeter").gaugeMeter();
+
         // Acc
     $(document).on("click", ".naccs .menu div", function() {
       var numberIndex = $(this).index();

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\ServiceController;
@@ -83,6 +84,19 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
                     Route::get('edit/{id}', 'edit')->name('service.edit')->middleware(['permission:edit_service']);
                     Route::put('update/{id}', 'update')->name('service.update')->middleware(['permission:edit_service']);
                     Route::delete('delete/{id}', 'destroy')->name('service.destroy')->middleware(['permission:delete_service']);
+                });
+            });
+            //manage paket
+            Route::controller(PaketController::class)->group(function () {
+                Route::prefix('paket/')->group(function () {
+                    Route::get('', 'index')->name('paket')->middleware(['permission:view_paket']);
+                    Route::post('checkshow', 'check')->name('paket.check');
+                    Route::get('create', 'create')->name('paket.create')->middleware(['permission:create_paket']);
+                    Route::post('store', 'store')->name('paket.store')->middleware(['permission:create_paket']);
+                    Route::get('show/{id}', 'show')->name('paket.show')->middleware(['permission:detail_paket']);
+                    Route::get('edit/{id}', 'edit')->name('paket.edit')->middleware(['permission:edit_paket']);
+                    Route::put('update/{id}', 'update')->name('paket.update')->middleware(['permission:edit_paket']);
+                    Route::delete('delete/{id}', 'destroy')->name('paket.destroy')->middleware(['permission:delete_paket']);
                 });
             });
         });
