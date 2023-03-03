@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Invoice;
+use App\Models\Paket;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Xendit\Invoice as XenditInvoice;
+use Xendit\Xendit;
 
 class SiteController extends Controller
 {
@@ -12,6 +18,83 @@ class SiteController extends Controller
     {
         $banners = Banner::get(['judul', 'sub_judul', 'deskripsi']);
         $services = Service::get(['judul', 'keterangan', 'gambar']);
-        return view('site.index', compact('banners', 'services'));
+        $pakets = Paket::where('is_show', 1)->where('is_active', 1)->get();
+        return view('site.index', compact('banners', 'services', 'pakets'));
+    }
+
+    public function paket($id)
+    {
+        $data = Paket::where('id', $id)->first();
+        if (is_null($data)) abort(404);
+        $user = Auth::user()->pelanggan;
+        return view('site.paket', compact('data', 'user'));
+    }
+
+    public function beliPaket(Request $request)
+    {
+        // dd($request->all());
+        $invoice_number = uniqid('INV/');
+        // dd($invoice_number);
+        $user = Auth::user();
+        $paket = Paket::where('id', $request->id)->first();
+        if (is_null($paket)) abort(405);
+        $ppn = round($paket->harga * 0.11);
+        $total = $paket->harga + $ppn;
+        $inv = Invoice::create([
+            'inv_number' => $invoice_number,
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'nohp' => $request->nohp,
+            'tanggal_pasang' => $request->tanggal,
+            'user_id' => $user->id,
+            'ppn' => $ppn,
+            'harga' => $paket->harga,
+            'total_harga' => $total,
+            'nama_paket' => $paket->judul,
+            'kecepatan' => $paket->kecepatan,
+            'fitur' => $paket->fitur
+        ]);
+        // make invoice from xendit
+        Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
+        $params = [
+            'external_id' => $invoice_number,
+            'amount' => $inv->total_harga,
+            'description' => 'Pembayaran paket ' . $inv->nama_paket,
+            'invoice_duration' => 1296000, //15 hari
+            'customer' => [
+                'given_names' => $inv->nama,
+                'email' => $user->email
+            ],
+            'payer_email' => $user->email,
+            'success_redirect_url' => route('thank-you', ['callback' => Crypt::encryptString($inv->id)]),
+            'failure_redirect_url' => route('failed', ['callback' => Crypt::encryptString($inv->id)]),
+            'currency' => 'IDR'
+        ];
+        $xenInv = XenditInvoice::create($params);
+        return response()->json([
+            'status' => 200,
+            'data' => $xenInv
+        ]);
+    }
+
+    public function thankyou(Request $request)
+    {
+        try {
+            if (isset($request->callback)) {
+                $id = Crypt::decryptString($request->callback);
+                $inv = Invoice::where('id', $id)->first();
+                if (is_null($inv)) return to_route('home');
+                $inv->status = 'PAID';
+                $inv->save();
+                return view('site.thank-you');
+            } else {
+                return to_route('home');
+            }
+        } catch (\Throwable $th) {
+            return to_route('home');
+        }
+    }
+    public function failed(Request $request)
+    {
     }
 }

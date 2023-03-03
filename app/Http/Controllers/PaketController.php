@@ -53,8 +53,13 @@ class PaketController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $input = $request->all();
+        $input['harga'] = Str::replace(',', '', $input['harga']);
+        $request->replace($input);
+
         $request->validate([
             'judul' => 'required',
+            'harga' => 'required|numeric',
             'kecepatan' => 'required',
             'persen' => 'required',
             'fitue.*' => 'required',
@@ -64,6 +69,7 @@ class PaketController extends Controller
         $fitur = implode(";", $request->fitur);
         $data = Paket::create([
             'judul' => $request->judul,
+            'harga' => $request->harga,
             'kecepatan' => $request->kecepatan,
             'percent' => $request->persen,
             'fitur' => $fitur,
@@ -105,8 +111,13 @@ class PaketController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $input = $request->all();
+        $input['harga'] = Str::replace(',', '', $input['harga']);
+        $request->replace($input);
+
         $request->validate([
             'judul' => 'required',
+            'harga' => 'required|numeric',
             'kecepatan' => 'required',
             'persen' => 'required',
             'fitue.*' => 'required',
@@ -117,6 +128,7 @@ class PaketController extends Controller
         if (is_null($data)) abort(404);
         $fitur = implode(";", $request->fitur);
         $data->judul = $request->judul;
+        $data->harga = $request->harga;
         $data->kecepatan = $request->kecepatan;
         $data->percent = $request->persen;
         $data->fitur = $fitur;

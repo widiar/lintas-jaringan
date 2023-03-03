@@ -118,6 +118,8 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
+    <script src="{{ asset('assets/js/simple.money.format.js') }}"></script>
+
     <script src="{{ asset('assets/js/admin.js') }}"></script>
     @yield('script')
 </body>

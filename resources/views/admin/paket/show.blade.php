@@ -21,6 +21,11 @@
                         <td>{{ $data->kecepatan }} Mbps</td>
                     </tr>
                     <tr>
+                        <th>Harga</th>
+                        <td>:</td>
+                        <td>Rp <span class="harga">{{ $data->harga }}</span></td>
+                    </tr>
+                    <tr>
                         <th>Fitur</th>
                         <td>:</td>
                         <td>
@@ -59,4 +64,10 @@
 
 @section('content-header')
 Detail Paket
+@endsection
+
+@section('script')
+<script>
+    $('.harga').simpleMoneyFormat();
+</script>
 @endsection

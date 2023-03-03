@@ -32,6 +32,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="text">Harga<span class="text-danger">*</span></label>
+                        <input autocomplete="off" type="text" required name="harga"
+                            class="form-control harga @error('harga') is-invalid @enderror"
+                            value="{{ old('harga', $data->harga ?? null) }}">
+                        @error('harga')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="text">Persen<span class="text-danger">*</span> <span class="badge badge-info"
                                 title="Persentase kecepatan bar yang akan di tampilkan di home">?</span></label>
                         <input autocomplete="off" type="text" min="0" max="100" required name="persen"
@@ -109,6 +118,7 @@ Tambah
 @section('script')
 <script>
     $(document).ready(function(){
+        $('.harga').simpleMoneyFormat();
         $('.select2-multi').select2({
             theme: 'bootstrap4',
             width: '100%',
@@ -120,6 +130,10 @@ Tambah
         $('#form').validate({
             rules: {
                 judul: 'required',
+                harga:{
+                    required: true,
+                    number: true
+                },
                 kecepatan:{
                     required: true,
                     number: true,

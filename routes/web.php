@@ -25,6 +25,14 @@ Route::get('register', function () {
 Route::post('register', [AuthController::class, 'register'])->name('register.post');
 Route::get('user/activate', [AuthController::class, 'activate'])->name('activate.user');
 
+Route::middleware('auth')->group(function () {
+    Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
+    Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');
+});
+
+Route::get('thank-you', [SiteController::class, 'thankyou'])->name('thank-you');
+Route::get('failed', [SiteController::class, 'failed'])->name('failed');
+
 
 Route::middleware(['auth', 'notPelanggan'])->group(function () {
     Route::prefix('/admin')->group(function () {
