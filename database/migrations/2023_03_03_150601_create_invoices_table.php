@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('kecepatan');
             $table->text('fitur')->nullable(true);
             $table->string('status')->default('PENDING');
+            $table->text('xendit')->nullable();
+            $table->date('jatuh_tempo');
             $table->timestamps();
         });
     }

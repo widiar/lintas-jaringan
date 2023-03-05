@@ -23,7 +23,7 @@
                         @endguest
                         @auth
                         <li class="">
-                            <div class="main-red-button-hover"><a href="{{ route('logout') }}">Dashboard</a></div>
+                            <div class="main-red-button-hover"><a href="{{ route('invoice') }}">Dashboard</a></div>
                         </li>
                         @endauth
                     </ul>

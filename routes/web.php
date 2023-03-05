@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
@@ -28,10 +29,24 @@ Route::get('user/activate', [AuthController::class, 'activate'])->name('activate
 Route::middleware('auth')->group(function () {
     Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
     Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');
+
+    //manage paket
+    Route::controller(InvoiceController::class)->group(function () {
+        Route::prefix('invoice/')->group(function () {
+            Route::get('', 'index')->name('invoice')->middleware(['permission:view_invoice']);
+            Route::get('show/{id}', 'show')->name('invoice.show')->middleware(['permission:detail_invoice']);
+            Route::get('edit/{id}', 'edit')->name('invoice.edit')->middleware(['permission:edit_invoice']);
+            Route::get('print/{id}', 'print')->name('invoice.print')->middleware(['permission:print_invoice']);
+            Route::put('update/{id}', 'update')->name('invoice.update')->middleware(['permission:edit_invoice']);
+            Route::delete('delete/{id}', 'destroy')->name('invoice.destroy')->middleware(['permission:delete_invoice']);
+        });
+    });
 });
 
 Route::get('thank-you', [SiteController::class, 'thankyou'])->name('thank-you');
 Route::get('failed', [SiteController::class, 'failed'])->name('failed');
+
+Route::get('render/email', [SiteController::class, 'render']);
 
 
 Route::middleware(['auth', 'notPelanggan'])->group(function () {

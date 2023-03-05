@@ -117,9 +117,9 @@
     <div class=content>
         <div class="wrapper-1">
             <div class="wrapper-2">
-                <h1>Terimakasih !</h1>
-                <p>Terimakasih telah mempercayai Lintas Jaringan. </p>
-                <p>agen kami akan menghubungi anda dalam 2x24 jam, pastikan anda berada di rumah </p>
+                <h1>Gagal !</h1>
+                <p>Pembayaran anda gagal. </p>
+                <p>Silahkan hubungi admin kami jika ada pertanyaan lebih lanjut </p>
                 <a href="{{ route('home') }}">
                     <button class="go-home" style="cursor: pointer;">
                         go home

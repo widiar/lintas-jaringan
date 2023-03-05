@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaidInvoiceMail;
+use App\Mail\RequestInvoiceMail;
 use App\Models\Banner;
 use App\Models\Invoice;
 use App\Models\Paket;
 use App\Models\Service;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Xendit\Invoice as XenditInvoice;
 use Xendit\Xendit;
 
@@ -40,6 +45,8 @@ class SiteController extends Controller
         if (is_null($paket)) abort(405);
         $ppn = round($paket->harga * 0.11);
         $total = $paket->harga + $ppn;
+        $now = Carbon::now();
+        $jatuh_tempo = $now->addDays(15)->format('Y-m-d');
         $inv = Invoice::create([
             'inv_number' => $invoice_number,
             'nama' => $request->nama,
@@ -52,7 +59,8 @@ class SiteController extends Controller
             'total_harga' => $total,
             'nama_paket' => $paket->judul,
             'kecepatan' => $paket->kecepatan,
-            'fitur' => $paket->fitur
+            'fitur' => $paket->fitur,
+            'jatuh_tempo' => $jatuh_tempo,
         ]);
         // make invoice from xendit
         Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
@@ -71,6 +79,9 @@ class SiteController extends Controller
             'currency' => 'IDR'
         ];
         $xenInv = XenditInvoice::create($params);
+        $inv->xendit = json_encode($xenInv);
+        $inv->save();
+        Mail::to($user->email)->send(new RequestInvoiceMail($inv));
         return response()->json([
             'status' => 200,
             'data' => $xenInv
@@ -84,7 +95,12 @@ class SiteController extends Controller
                 $id = Crypt::decryptString($request->callback);
                 $inv = Invoice::where('id', $id)->first();
                 if (is_null($inv)) return to_route('home');
+                if ($inv->is_paid_mail == 0) {
+                    $user = User::where('id', $inv->user_id)->first();
+                    Mail::to($user->email)->send(new PaidInvoiceMail($inv));
+                }
                 $inv->status = 'PAID';
+                $inv->is_paid_mail = 1;
                 $inv->save();
                 return view('site.thank-you');
             } else {
@@ -96,5 +112,29 @@ class SiteController extends Controller
     }
     public function failed(Request $request)
     {
+        try {
+            if (isset($request->callback)) {
+                $id = Crypt::decryptString($request->callback);
+                $inv = Invoice::where('id', $id)->first();
+                if (is_null($inv)) return to_route('home');
+                $inv->status = 'FAILED';
+                $inv->save();
+                return view('site.failed');
+            } else {
+                return to_route('home');
+            }
+        } catch (\Throwable $th) {
+            return to_route('home');
+        }
+    }
+
+    public function render()
+    {
+        $now = Carbon::now();
+        // dd($now->addDays(15)->format('Y-m-d'));
+        $data = Invoice::find(1);
+        // dd(json_decode($data->xendit)->invoice_url);
+        // return $pdf->stream();
+        return (new PaidInvoiceMail($data))->render();
     }
 }
