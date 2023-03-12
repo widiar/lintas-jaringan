@@ -9,6 +9,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
     Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');
 
-    //manage paket
+    //manage invoice
     Route::controller(InvoiceController::class)->group(function () {
         Route::prefix('invoice/')->group(function () {
             Route::get('', 'index')->name('invoice')->middleware(['permission:view_invoice']);
@@ -39,6 +40,20 @@ Route::middleware('auth')->group(function () {
             Route::get('print/{id}', 'print')->name('invoice.print')->middleware(['permission:print_invoice']);
             Route::put('update/{id}', 'update')->name('invoice.update')->middleware(['permission:edit_invoice']);
             Route::delete('delete/{id}', 'destroy')->name('invoice.destroy')->middleware(['permission:delete_invoice']);
+        });
+    });
+
+    //manage ticket
+    Route::controller(TicketController::class)->group(function () {
+        Route::prefix('ticket/')->group(function () {
+            Route::get('', 'index')->name('ticket')->middleware(['permission:view_ticket']);
+            Route::get('create', 'create')->name('ticket.create')->middleware(['permission:create_ticket']);
+            Route::post('store', 'store')->name('ticket.store')->middleware(['permission:create_ticket']);
+            Route::get('show/{id}', 'show')->name('ticket.show')->middleware(['permission:detail_ticket']);
+            Route::get('edit/{id}', 'edit')->name('ticket.edit')->middleware(['permission:edit_ticket']);
+            Route::get('print/{id}', 'print')->name('ticket.print')->middleware(['permission:print_ticket']);
+            Route::put('update/{id}', 'update')->name('ticket.update')->middleware(['permission:edit_ticket']);
+            Route::delete('delete/{id}', 'destroy')->name('ticket.destroy')->middleware(['permission:delete_ticket']);
         });
     });
 });

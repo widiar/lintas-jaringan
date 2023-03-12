@@ -11,54 +11,33 @@
     <ul class="navbar-nav ml-auto">
 
         <!-- Messages Dropdown Menu -->
+        @role('admin|super admin')
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+                <span class="badge badge-danger navbar-badge">{{ count(getTicketAdmin()) }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
+                @foreach (getTicketAdmin() as $tiket)
+                <a href="{{ route('ticket.edit', encodehasids($tiket->id)) }}" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                                Brad Diesel
+                                {{ $tiket->subject }}
                             </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
+                            <p class="text-sm">{{ $tiket->detail[0]->body }}</p>
                         </div>
                     </div>
                     <!-- Message End -->
                 </a>
+                @endforeach
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Brad Diesel
-                            </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Brad Diesel
-                            </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                <a href="{{ route('ticket') }}" class="dropdown-item dropdown-footer">Lihat Semua Tiket</a>
             </div>
         </li>
+        @endrole
+
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>

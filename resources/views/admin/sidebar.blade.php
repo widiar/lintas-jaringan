@@ -67,7 +67,18 @@
                     </a>
                 </li>
                 @endcan
-                @role('admin')
+                @can('view_ticket')
+                <li class="nav-item">
+                    <a href="{{ route('ticket') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'ticket') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            Tiket
+                        </p>
+                    </a>
+                </li>
+                @endcan
+                @role('admin|super admin')
                 <li class="nav-hr"></li>
                 <li
                     class="nav-item {{ str_contains(Route::currentRouteName(), 'admin.user') || str_contains(Route::currentRouteName(), 'admin.roles') ? ' menu-open' : '' }}">

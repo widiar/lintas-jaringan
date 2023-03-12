@@ -121,6 +121,7 @@
     <script src="{{ asset('assets/js/simple.money.format.js') }}"></script>
 
     <script src="{{ asset('assets/js/admin.js') }}"></script>
+
     @yield('script')
 </body>
 
