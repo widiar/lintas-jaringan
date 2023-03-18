@@ -68,6 +68,54 @@
     </div>
 </div>
 
+<div id="pricing" class="pricing-tables">
+    <div class="tables-left-dec">
+        <img src="assets/images/tables-left-dec.png" alt="">
+    </div>
+    <div class="tables-right-dec">
+        <img src="assets/images/tables-right-dec.png" alt="">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h2>Select a suitable <em>plan</em> for your next <span>projects</span></h2>
+                    <span>Our Plans</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach ($pakets as $paket)
+            <div class="col-lg-4">
+                <div class="item first-item">
+                    <h4>{{ $paket->judul }}</h4>
+                    <em></em>
+                    <span class="harga">{{ $paket->harga }}</span>
+                    <div class="GaugeMeter" data-width="15" data-percent="{{ $paket->percent }}"
+                        data-text="{{ $paket->kecepatan }}" data-label="MB/s" data-style="Arch">
+                    </div>
+                    <ul>
+                        @foreach (explode(';', $paket->fitur) as $item)
+                        <li>{{ $item }}</li>
+
+                        @endforeach
+                    </ul>
+                    <div class="main-blue-button-hover mb-3">
+                        @guest
+                        <a href="{{ route('login') }}">Pilih Paket</a>
+                        @endguest
+                        @auth
+                        <a href="{{ route('paket', $paket->id) }}">Pilih Paket</a>
+                        @endauth
+                    </div>
+                    <a href="https://api.whatsapp.com/send?phone=6283189871080&text=Hallo, saya ingin bertanya mengenai {{ $paket->judul }}" class="text-sm">Tanyakan</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 <div id="about" class="about-us section">
     <div class="container">
         <div class="row">
@@ -125,54 +173,7 @@
     </div>
 </div>
 
-<div id="pricing" class="pricing-tables">
-    <div class="tables-left-dec">
-        <img src="assets/images/tables-left-dec.png" alt="">
-    </div>
-    <div class="tables-right-dec">
-        <img src="assets/images/tables-right-dec.png" alt="">
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-                <div class="section-heading">
-                    <h2>Select a suitable <em>plan</em> for your next <span>projects</span></h2>
-                    <span>Our Plans</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @foreach ($pakets as $paket)
-            <div class="col-lg-4">
-                <div class="item first-item">
-                    <h4>{{ $paket->judul }}</h4>
-                    <em></em>
-                    <span class="harga">{{ $paket->harga }}</span>
-                    <div class="GaugeMeter" data-width="15" data-percent="{{ $paket->percent }}"
-                        data-text="{{ $paket->kecepatan }}" data-label="MB/s" data-style="Arch">
-                    </div>
-                    <ul>
-                        @foreach (explode(';', $paket->fitur) as $item)
-                        <li>{{ $item }}</li>
 
-                        @endforeach
-                    </ul>
-                    <div class="main-blue-button-hover mb-3">
-                        @guest
-                        <a href="{{ route('login') }}">Get Started</a>
-                        @endguest
-                        @auth
-                        <a href="{{ route('paket', $paket->id) }}">Get Started</a>
-                        @endauth
-                    </div>
-                    <a href="" class="text-sm">More Pricing <i class="fa fa-long-arrow-right m-l-5"
-                            aria-hidden="true"></i></a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</div>
 
 <div id="contact" class="contact-us section">
     <div class="container">

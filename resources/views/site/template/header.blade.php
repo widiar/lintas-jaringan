@@ -6,15 +6,15 @@
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="{{ route('home') }}" class="logo">
-                        <img src="{{ asset('assets/images/logo.png') }}">
+                        <img src="https://uilogos.co/img/logotype/circle.png" style="width: 100px !important">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                         <li class="scroll-to-section"><a href="#services">Services</a></li>
-                        <li class="scroll-to-section"><a href="#about">About</a></li>
                         <li class="scroll-to-section"><a href="#pricing">Pricing</a></li>
+                        <li class="scroll-to-section"><a href="#about">About</a></li>
                         <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                         @guest
                         <li class="">
