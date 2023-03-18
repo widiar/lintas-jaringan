@@ -69,6 +69,8 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
         Route::name('admin.')->group(function () {
             //dashboard
             Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard')->middleware(['permission:view_dahsboard']);
+            Route::post('filterPelanggan', [DashboardController::class, 'filterPelanggan'])->name('filter.chart.pelanggan')->middleware(['permission:view_dahsboard']);
+            Route::post('filterInvoice', [DashboardController::class, 'filterInvoice'])->name('filter.chart.invoice')->middleware(['permission:view_dahsboard']);
 
             Route::middleware(['role:super admin'])->group(function () {
                 Route::get('permission/create', [PermissionController::class, 'create'])->name('permission.create');

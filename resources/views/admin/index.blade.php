@@ -23,6 +23,10 @@
 
     <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('plugins/chart.js/Chart.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     <style>
@@ -115,6 +119,13 @@
 
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
+
+    {{-- <script src="{{ asset('plugins/moment/locale/id.js') }}"></script> --}}
+    {{-- <script src="{{ asset('plugins/moment/locales.min.js') }}"></script> --}}
+    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 

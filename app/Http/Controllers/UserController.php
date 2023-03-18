@@ -41,6 +41,14 @@ class UserController extends Controller
                             return false;
                         });
                     }
+                    if (!empty($request->get('type'))) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            if (Str::contains(Str::lower($row['role']), Str::lower($request->get('type')))) {
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
                 })
                 ->addColumn('role', function ($row) {
                     return $row->getRoleNames()->toArray()[0];

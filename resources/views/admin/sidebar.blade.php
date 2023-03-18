@@ -5,7 +5,7 @@
         class="brand-link">
         <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Dashboard</span>
     </a>
 
     <!-- Sidebar -->
@@ -49,7 +49,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.paket') }}"
                         class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.paket') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <i class="nav-icon fas fa-feather-alt"></i>
                         <p>
                             Paket
                         </p>
@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     <a href="{{ route('invoice') }}"
                         class="nav-link{{ str_contains(Route::currentRouteName(), 'invoice') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Invoice
                         </p>
@@ -71,7 +71,7 @@
                 <li class="nav-item">
                     <a href="{{ route('ticket') }}"
                         class="nav-link{{ str_contains(Route::currentRouteName(), 'ticket') ? ' active' : '' }}">
-                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <i class="nav-icon fas fa-ticket-alt"></i>
                         <p>
                             Tiket
                         </p>

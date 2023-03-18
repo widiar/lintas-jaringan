@@ -39,6 +39,8 @@
 <script>
     let user = @json(auth()->user()->can('print_user'));
     // if (user) alert('ok')
+    let searchParams = new URLSearchParams(window.location.search);
+    let param = searchParams.get('type')
     $("#datatables").DataTable({
         responsive: true,
         lengthChange: true,
@@ -50,7 +52,8 @@
             data: function (d) {
                 // Param Advance Filter Modalbox
                 d.name = $('#id_name_filter').val(),
-                d.search = $('input[type="search"]').val()
+                d.search = $('input[type="search"]').val(),
+                d.type = param
             }
         },
         columns: [
