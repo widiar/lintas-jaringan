@@ -37,6 +37,7 @@
         responsive: true,
         lengthChange: true,
         processing: true,
+        searchDelay: 1200,
         serverSide: true,
         searching: true,
         ajax: {

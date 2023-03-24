@@ -39,6 +39,7 @@
         lengthChange: true,
         processing: true,
         serverSide: true,
+        searchDelay: 1200,
         searching: true,
         ajax: {
             url: "{{Request::url()}}",

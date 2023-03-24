@@ -47,6 +47,7 @@
         processing: true,
         serverSide: true,
         searching: true,
+        searchDelay: 1200,
         ajax: {
             url: "{{Request::url()}}",
             data: function (d) {

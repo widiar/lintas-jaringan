@@ -20,6 +20,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nomor Ticket</th>
+                            <th>Username</th>
                             <th>Subject</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -44,6 +45,7 @@
         lengthChange: true,
         processing: true,
         serverSide: true,
+        searchDelay: 1200,
         searching: true,
         ajax: {
             url: "{{Request::url()}}",
@@ -56,6 +58,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'names', name: 'names'},
+            {data: 'user.username', name: 'usernames'},
             {data: 'subject', name: 'subject'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

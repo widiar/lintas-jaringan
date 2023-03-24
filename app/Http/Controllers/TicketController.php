@@ -18,10 +18,10 @@ class TicketController extends Controller
         $user = Auth::user();
         if ($request->ajax()) {
             if ($user->hasRole('Pelanggan')) {
-                $data = Ticket::where('user_id', $user->id)->get();
+                $data = Ticket::with('user')->where('user_id', $user->id)->get();
             } else {
                 // $data = Ticket::where('user_admin', $user->id)->get();
-                $data = Ticket::with('detail')->get();
+                $data = Ticket::with('detail', 'user')->get();
             }
             return DataTables::of($data)
                 ->addIndexColumn()
