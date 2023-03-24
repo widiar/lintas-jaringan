@@ -57,7 +57,12 @@
                     @foreach ($services as $service)
                     <div class="item">
                         <h4>{{ $service->judul }}</h4>
-                        <div class="icon"><img src="{{ Storage::url('service/icon/') . $service->gambar }}" alt="">
+                        <div class="icon">
+                            @if(env('APP_ENV') == 'local')
+                            <img src="{{ Storage::url('service/icon/') . $service->gambar }}" alt="">
+                            @else
+                            <img src="{{ asset('assets/images/service-icon-0') . rand(1,4) . '.png' }}" alt="">
+                            @endif
                         </div>
                         <p>{{ $service->keterangan }}</p>
                     </div>
@@ -108,7 +113,8 @@
                         <a href="{{ route('paket', $paket->id) }}">Pilih Paket</a>
                         @endauth
                     </div>
-                    <a href="https://api.whatsapp.com/send?phone=6283189871080&text=Hallo, saya ingin bertanya mengenai {{ $paket->judul }}" class="text-sm">Tanyakan</a>
+                    <a href="https://api.whatsapp.com/send?phone=6283189871080&text=Hallo, saya ingin bertanya mengenai {{ $paket->judul }}"
+                        class="text-sm">Tanyakan</a>
                 </div>
             </div>
             @endforeach
