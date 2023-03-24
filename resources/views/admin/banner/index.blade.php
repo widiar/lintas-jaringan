@@ -45,7 +45,7 @@
         searchDelay: 1200,
         searching: true,
         ajax: {
-            url: "{{Request::url()}}",
+            url: "",
             data: function (d) {
                 // Param Advance Filter Modalbox
                 d.name = $('#id_name_filter').val(),
