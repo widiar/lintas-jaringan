@@ -26,13 +26,20 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        Role::create(['name' => 'Pelanggan']);
-        $role = Role::create(['name' => 'super admin']);
-        $user = User::create([
-            'username' => 'admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('admin')
-        ]);
+        $roleP = Role::where('name', 'Pelanggan')->first();
+        if (is_null($roleP))
+            Role::create(['name' => 'Pelanggan']);
+
+        $role = Role::where('name', 'super admin')->first();
+        if (is_null($role))
+            $role = Role::create(['name' => 'super admin']);
+        $user = User::where('username', 'admin')->where('email', 'admin@admin.com')->first();
+        if (is_null($user))
+            $user = User::create([
+                'username' => 'admin',
+                'email' => 'admin@admin.com',
+                'password' => Hash::make('superadmin')
+            ]);
         $user->assignRole($role);
 
         // Reset cached roles and permissions
