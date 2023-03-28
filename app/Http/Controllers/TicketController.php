@@ -80,8 +80,8 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $rand = Str::random();
-        $ticketNumber = '#' . $rand;
+        $rand = Str::random(4);
+        $ticketNumber = 'T-' . date('dmy') . '-' . $rand;
 
         $cek = Ticket::where('names', $ticketNumber)->first();
         if (!is_null($cek)) $ticketNumber = '#' . Str::random();

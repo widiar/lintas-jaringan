@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Xendit\Invoice as XenditInvoice;
 use Xendit\Xendit;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
@@ -38,7 +39,7 @@ class SiteController extends Controller
     public function beliPaket(Request $request)
     {
         // dd($request->all());
-        $invoice_number = uniqid('INV/');
+        $invoice_number = 'INV/' . date('dmy') . '/' . Str::random(5);
         // dd($invoice_number);
         $user = Auth::user();
         $paket = Paket::where('id', $request->id)->first();
