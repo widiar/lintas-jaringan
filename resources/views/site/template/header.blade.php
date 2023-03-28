@@ -6,7 +6,7 @@
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="{{ route('home') }}" class="logo">
-                        <img src="https://uilogos.co/img/logotype/circle.png" style="width: 100px !important">
+                        <img src="{{ asset('assets/images/LJN-1.png') }}" style="width: 150px !important">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
@@ -22,8 +22,11 @@
                         </li>
                         @endguest
                         @auth
+                        <li class="scroll-to-section">
+                            <a href="{{ route('ticket') }}">Tiket</a>
+                        </li>
                         <li class="">
-                            <div class="main-red-button-hover"><a href="{{ route('invoice') }}">Dashboard</a></div>
+                            <div class="main-red-button-hover"><a href="{{ route('invoice') }}">Invoice</a></div>
                         </li>
                         @endauth
                     </ul>

@@ -46,8 +46,8 @@
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
                 <div class="section-heading">
-                    <h2>We <em>Provide</em> The Best Service With <span>Our Tools</span></h2>
-                    <span>Our Services</span>
+                    <h2>Kami Memberikan <em>Layanan</em> yang <span>Terbaik</span></h2>
+                    <span>Layanan Kami</span>
                 </div>
             </div>
         </div>
@@ -84,8 +84,8 @@
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
                 <div class="section-heading">
-                    <h2>Select a suitable <em>plan</em> for your next <span>projects</span></h2>
-                    <span>Our Plans</span>
+                    <h2>Pilihan <em>paket</em> yang kami <span>sediakan</span></h2>
+                    <span>Paket</span>
                 </div>
             </div>
         </div>
@@ -132,23 +132,27 @@
             </div>
             <div class="col-lg-6">
                 <div class="section-heading">
-                    <h2>Grow your website with our <em>SEO Tools</em> &amp; <span>Project</span> Management</h2>
-                    <p>You can browse free HTML templates on Too CSS website. Visit the website and explore latest
-                        website templates for your projects.</p>
+                    <h2><span>Tentang</span> Kami</h2>
+                    <p style="margin-top: 10px; text-align: justify">Lintas Jaringan Nusantara atau LJN adalah salah
+                        satu perusahaan yang
+                        bergerak di bidang Internet
+                        Service Provider dan One Stop IT Solution di Indonesia, yang memulai karirnya melalui kafe
+                        internet. LJN menyediakan produk dan layanan untuk berbagai kebutuhan IT mulai dari pengadaan
+                        perangkat, konfigurasi lokal, konfigurasi perangkat keras dan perangkat lunak, hingga
+                        pemeliharaan jaringan area lokal.</p>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="fact-item">
                                 <div class="count-area-content">
                                     <div class="icon">
                                         <img src="assets/images/service-icon-01.png" alt="">
                                     </div>
-                                    <div class="count-digit">320</div>
-                                    <div class="count-title">SEO Projects</div>
-                                    <p>Lorem ipsum dolor sitti amet, consectetur.</p>
+                                    <div class="count-digit">1000</div>
+                                    <div class="count-title">Pelanggan</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="fact-item">
                                 <div class="count-area-content">
                                     <div class="icon">
@@ -156,19 +160,7 @@
                                     </div>
                                     <div class="count-digit">640</div>
                                     <div class="count-title">Websites</div>
-                                    <p>Lorem ipsum dolor sitti amet, consectetur.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="fact-item">
-                                <div class="count-area-content">
-                                    <div class="icon">
-                                        <img src="assets/images/service-icon-03.png" alt="">
-                                    </div>
-                                    <div class="count-digit">120</div>
-                                    <div class="count-title">Satisfied Clients</div>
-                                    <p>Lorem ipsum dolor sitti amet, consectetur.</p>
+                                    <div class="count-title"></div>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +178,7 @@
         <div class="row">
             <div class="col-lg-7">
                 <div class="section-heading">
-                    <h2>Feel free to <em>Contact</em> us via the <span>HTML form</span></h2>
+                    <h2><em>Masukan anda</em> anda sangat <span>berarti</span> untuk kami</h2>
                     <div id="map">
                         <iframe
                             src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -208,20 +200,13 @@
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="surname" name="surname" id="surname" placeholder="Surname"
-                                    autocomplete="on" required>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <fieldset>
                                 <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                    placeholder="Your Email" required="">
+                                    placeholder="Email anda" required="">
                             </fieldset>
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="text" name="website" id="website" placeholder="Your Website URL"
-                                    required="">
+                                <input type="text" name="website" id="website" placeholder="Masukan anda" required="">
                             </fieldset>
                         </div>
                         <div class="col-lg-12">

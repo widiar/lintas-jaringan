@@ -12,7 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <title>Lintas Jaringan</title>
+    <title>Lintas Jaringan Nusantara</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/Favicon-LJN.png') }}" />
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -63,7 +65,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="copyright">
-                        <p>Copyright © 2021 Lintas Jaringan., Ltd. All Rights Reserved.
+                        <p>Copyright © 2021 Lintas Jaringan Nusantara. All Rights Reserved.
                         </p>
                     </div>
                 </div>
