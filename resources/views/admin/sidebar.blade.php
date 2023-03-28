@@ -16,7 +16,11 @@
                 <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ auth()->user()->username }}</a>
+                @if(auth()->user()->hasRole('Pelanggan'))
+                <a href="{{ route('edit.profile') }}" class="d-block">{{ auth()->user()->username }}</a>
+                @else
+                <a href="#a" class="d-block">{{ auth()->user()->username }}</a>
+                @endif
             </div>
         </div>
 
@@ -78,6 +82,17 @@
                     </a>
                 </li>
                 @endcan
+                @role('Pelanggan')
+                <li class="nav-item">
+                    <a href="{{ route('edit.profile') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'edit.profile') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Edit Profile
+                        </p>
+                    </a>
+                </li>
+                @endrole
                 @role('admin|super admin')
                 <li class="nav-hr"></li>
                 <li

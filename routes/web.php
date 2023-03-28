@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
     Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');
 
+    Route::get('edit-profile', [AuthController::class, 'editProfile'])->name('edit.profile');
+    Route::post('edit-profile', [AuthController::class, 'editProfilePost']);
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('change.password');
+
     //manage invoice
     Route::controller(InvoiceController::class)->group(function () {
         Route::prefix('invoice/')->group(function () {

@@ -91,4 +91,35 @@ class AuthController extends Controller
         $user->save();
         return to_route('login')->with('success', 'Akun anda telah aktif. Silahkan Login');
     }
+
+    public function editProfile()
+    {
+        if (!Auth::user()->hasRole('Pelanggan')) abort(403);
+        $user = User::with('pelanggan')->where('id', Auth::user()->id)->first();
+        if (is_null($user)) abort(404);
+        return view('admin.profile.edit', compact('user'));
+    }
+
+    public function editProfilePost(Request $request)
+    {
+        $user = User::with('pelanggan')->where('id', Auth::user()->id)->first();
+        if (is_null($user)) abort(404);
+        $user->pelanggan->nama = $request->nama;
+        $user->pelanggan->alamat = $request->alamat;
+        $user->pelanggan->nohp = $request->nohp;
+        $user->pelanggan->save();
+
+        return to_route('edit.profile')->with('success', 'Data Berhasil Diupdate!');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        if (!Hash::check($request->passwordLama, $user->password)) {
+            return response()->json(['status' => 'password_salah']);
+        }
+        $user->password = Hash::make($request->passwordBaru);
+        $user->save();
+        return response()->json(['status' => 'success']);
+    }
 }
