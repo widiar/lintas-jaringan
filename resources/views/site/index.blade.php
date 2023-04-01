@@ -191,27 +191,28 @@
                 </div>
             </div>
             <div class="col-lg-5 align-self-center">
-                <form id="contact" action="" method="get">
+                <form id="contact" action="{{ route('saran') }}" method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                                <input type="text" name="name" id="name" placeholder="Name" autocomplete="off" required>
                             </fieldset>
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                    placeholder="Email anda" required="">
+                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*"
+                                    placeholder="Email anda" required>
                             </fieldset>
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="text" name="website" id="website" placeholder="Masukan anda" required="">
+                                <input type="text" name="masukan" id="masukan" placeholder="Masukan anda">
                             </fieldset>
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <button type="submit" id="form-submit" class="main-button">Submit Request</button>
+                                <button type="submit" id="form-submit" class="main-button">Kirim Masukan</button>
                             </fieldset>
                         </div>
                     </div>
@@ -226,4 +227,47 @@
         <img src="assets/images/contact-left-dec.png" alt="">
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $('#contact').validate({
+        rules: {
+            name: 'required',
+            email: 'required',
+            masukan: 'required',
+        },
+        submitHandler: function(form, e) {
+            e.preventDefault()
+            $('button[type="submit"]').attr('disabled', 'disabled')
+            $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
+            // $('.alert-success').text('')
+            // form.submit()
+            // console.log(form.attr('action'))
+            $.ajax({
+                url: `{{ route('saran') }}`,
+                method: 'POST',
+                data: {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    masukan: $('#masukan').val()
+                },
+                success: (res) => {
+                    if(res.status == 'success'){
+                        Swal.fire(
+                            "Sukses",
+                            "Masukkan anda sudah berhasil di input",
+                            "success"
+                        );
+                    }
+                },
+                complete: (res) => {
+                    $('button[type="submit"]').removeAttr('disabled')
+                    $('button[type="submit"]').html(`Kirim Masukan`)
+                    $('#contact').find('input').val('');
+                }
+            })
+        }
+    })
+</script>
 @endsection

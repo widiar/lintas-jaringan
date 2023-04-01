@@ -27,6 +27,8 @@ Route::get('register', function () {
 Route::post('register', [AuthController::class, 'register'])->name('register.post');
 Route::get('user/activate', [AuthController::class, 'activate'])->name('activate.user');
 
+Route::post('saran', [SiteController::class, 'saran'])->name('saran');
+
 Route::middleware('auth')->group(function () {
     Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
     Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');

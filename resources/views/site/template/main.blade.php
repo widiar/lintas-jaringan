@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-onix-digital.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/gauge.css') }}">
 
@@ -85,6 +86,7 @@
     <script src="{{ asset('assets/js/simple.money.format.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <script>
         jQuery.validator.setDefaults({
             errorElement: 'span',

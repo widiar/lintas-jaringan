@@ -7,6 +7,7 @@ use App\Mail\RequestInvoiceMail;
 use App\Models\Banner;
 use App\Models\Invoice;
 use App\Models\Paket;
+use App\Models\Saran;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
@@ -129,6 +130,7 @@ class SiteController extends Controller
         }
     }
 
+    // ----- DEBUG ONLY ----
     public function render()
     {
         $now = Carbon::now();
@@ -137,5 +139,25 @@ class SiteController extends Controller
         // dd(json_decode($data->xendit)->invoice_url);
         // return $pdf->stream();
         return (new PaidInvoiceMail($data))->render();
+    }
+    // ----- DEBUG ONLY -----
+
+    public function saran(Request $request)
+    {
+        $saran = Saran::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'masukan' => $request->masukan
+        ]);
+
+        if ($saran) {
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'failed'
+            ]);
+        }
     }
 }
