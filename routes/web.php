@@ -83,6 +83,8 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
                 Route::post('permission/create', [PermissionController::class, 'store'])->name('permission.store');
             });
 
+            ROute::get('saran', [DashboardController::class, 'saran'])->name('saran');
+
             // manage users
             // Route::resource('user', UserController::class);
             Route::controller(UserController::class)->group(function () {

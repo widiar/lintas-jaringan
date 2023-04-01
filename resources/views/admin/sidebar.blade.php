@@ -86,6 +86,17 @@
                     </a>
                 </li>
                 @endcan
+                @can('view_saran')
+                <li class="nav-item">
+                    <a href="{{ route('admin.saran') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.saran') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-vote-yea"></i>
+                        <p>
+                            Saran
+                        </p>
+                    </a>
+                </li>
+                @endcan
                 @role('Pelanggan')
                 <li class="nav-item">
                     <a href="{{ route('edit.profile') }}"

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Paket;
 use App\Models\Pelanggan;
+use App\Models\Saran;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -87,5 +90,16 @@ class DashboardController extends Controller
             'status' => 'success',
             'data' => $inv
         ]);
+    }
+
+    public function saran(Request $request)
+    {
+        if ($request->ajax()) {
+            $sarans = Saran::all();
+            return DataTables::of($sarans)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('admin.saran.index');
     }
 }
