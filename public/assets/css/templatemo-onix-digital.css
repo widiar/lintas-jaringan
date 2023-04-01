@@ -984,7 +984,7 @@ Banner Style
 
 .main-banner:before {
   content: '';
-  background-image: url(../images/banner-right-image.png);
+  background-image: url(../images/banner-right-2.png);
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;

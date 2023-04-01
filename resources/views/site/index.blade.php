@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-lg-6 align-self-center">
                 <div class="left-image">
-                    <img src="assets/images/about-left-image.png" alt="Two Girls working together">
+                    <img src="assets/images/about-left-image-1.png" alt="Two Girls working together">
                 </div>
             </div>
             <div class="col-lg-6">
