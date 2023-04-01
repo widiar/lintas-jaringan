@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PaidInvoiceMail;
+use App\Mail\PerubahanTanggalPasangMail;
 use App\Mail\RequestInvoiceMail;
 use App\Models\Banner;
 use App\Models\Invoice;
@@ -46,6 +47,7 @@ class SiteController extends Controller
         $paket = Paket::where('id', $request->id)->first();
         if (is_null($paket)) abort(405);
         $ppn = round($paket->harga * 0.11);
+        $ppn = 250000;
         $total = $paket->harga + $ppn;
         $now = Carbon::now();
         $jatuh_tempo = $now->addDays(15)->format('Y-m-d');
@@ -70,7 +72,7 @@ class SiteController extends Controller
             'external_id' => $invoice_number,
             'amount' => $inv->total_harga,
             'description' => 'Pembayaran paket ' . $inv->nama_paket,
-            'invoice_duration' => 1296000, //15 hari
+            'invoice_duration' => 86400, //1 hari
             'customer' => [
                 'given_names' => $inv->nama,
                 'email' => $user->email
@@ -119,7 +121,7 @@ class SiteController extends Controller
                 $id = Crypt::decryptString($request->callback);
                 $inv = Invoice::where('id', $id)->first();
                 if (is_null($inv)) return to_route('home');
-                $inv->status = 'FAILED';
+                $inv->status = 'EXPIRED';
                 $inv->save();
                 return view('site.failed');
             } else {
@@ -138,7 +140,7 @@ class SiteController extends Controller
         $data = Invoice::find(1);
         // dd(json_decode($data->xendit)->invoice_url);
         // return $pdf->stream();
-        return (new PaidInvoiceMail($data))->render();
+        return (new PerubahanTanggalPasangMail($data))->render();
     }
     // ----- DEBUG ONLY -----
 

@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
             Route::get('', 'index')->name('invoice')->middleware(['permission:view_invoice']);
             Route::get('show/{id}', 'show')->name('invoice.show')->middleware(['permission:detail_invoice']);
             Route::get('edit/{id}', 'edit')->name('invoice.edit')->middleware(['permission:edit_invoice']);
+            Route::post('edit/{id}', 'update')->name('invoice.update')->middleware(['permission:edit_invoice']);
             Route::get('print/{id}', 'print')->name('invoice.print')->middleware(['permission:print_invoice']);
             Route::put('update/{id}', 'update')->name('invoice.update')->middleware(['permission:edit_invoice']);
             Route::delete('delete/{id}', 'destroy')->name('invoice.destroy')->middleware(['permission:delete_invoice']);

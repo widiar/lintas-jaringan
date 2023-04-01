@@ -5,9 +5,9 @@ Hello {{ $user->pelanggan->nama }}, <br>
 Tagihan anda dengan nomor <b>{{ $data->inv_number }}</b> telah berhasil dibayar. <br>
 
 <x-mail::table>
-| Deskripsi     | Jatuh tempo      | Harga          | PPN       |  Grand Total       |
+| Deskripsi     | Jatuh tempo      | Harga          | Biaya Pasang       |  Grand Total       |
 | :------------ |:-------------:   | :----------:   | :------:  | :------------:     |
-| {{ $data->nama_paket }}    | {{ strftime("%e %B %Y", strtotime($data->jatuh_tempo)) }} | Rp {{ number_format($data->harga, 2, ',', '.') }}  | 11%       | Rp {{ number_format($data->total_harga, 2, ',', '.') }}       |
+| {{ $data->nama_paket }}    | {{ strftime("%e %B %Y", strtotime($data->jatuh_tempo)) }} | Rp {{ number_format($data->harga, 2, ',', '.') }}  | Rp {{ number_format($data->ppn, 2, ',', '.') }}       | Rp {{ number_format($data->total_harga, 2, ',', '.') }}       |
 
 </x-mail::table>
 

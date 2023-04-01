@@ -92,15 +92,16 @@
                                 </tr>
                                 <tr>
                                     <td>Biaya Pasang :</td>
-                                    <td><b>GRATIS</b></td>
+                                    <td><b>Rp <span class="harga">250000</span></b></td>
                                 </tr>
                                 @php
                                 $ppn = round($data->harga * 0.11);
-                                $total = $data->harga + $ppn;
+                                // $total = $data->harga + $ppn;
+                                $total = $data->harga + 250000;
                                 @endphp
                                 <tr>
                                     <td>PPN :</td>
-                                    <td><b>Rp <span class="harga">{{ $ppn }}</span></b></td>
+                                    <td><b>-</b></td>
                                 </tr>
                                 <tr>
                                     <td>Total Harga</td>

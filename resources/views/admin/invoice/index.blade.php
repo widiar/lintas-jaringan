@@ -13,7 +13,7 @@
                             <th>No</th>
                             <th>Nomor Invoice</th>
                             <th>Nama Paket</th>
-                            <th>Kecepatan</th>
+                            <th>Nama Pelanggan</th>
                             <th>Tanggal Pesan</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -52,7 +52,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'inv_number', name: 'inv_number'},
             {data: 'nama_paket', name: 'nama_paket'},
-            {data: 'kecepatan', name: 'kecepatan'},
+            {data: 'user.pelanggan.nama', name: 'user.pelanggan.nama'},
             {data: 'tanggal_pesan', name: 'tanggal_pesan'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
