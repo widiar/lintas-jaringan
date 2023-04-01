@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\RegisterUser;
+use App\Models\Invoice;
 use App\Models\Pelanggan;
 use App\Models\User;
 use Carbon\Carbon;
@@ -27,14 +28,20 @@ class AuthController extends Controller
             'username' => $request->username,
             'password' => $request->password
         ];
+        if ($user->hasRole('Pelanggan')) $msg = '';
+        else {
+            $pending = Invoice::where('status', 'PENDING')->count();
+            $paid = Invoice::where('status', 'PAID')->count();
+            $msg = 'Terdapat Pembelian terbaru dengan total <br>' . $pending . ' belum bayar dan ' . $paid . ' sudah dibayar';
+        }
         if (Auth::attempt($cre)) {
             if (isset($request->next))
-                return redirect($request->next);
+                return redirect($request->next)->with('message', $msg);
             if ($user->hasRole('Pelanggan')) {
                 if (is_null($user->email_verified_at)) return to_route('login')->with('status', 'Akun anda belum terverifikasi.');
                 return to_route('home');
             } else {
-                return to_route('admin.dashboard');
+                return to_route('admin.dashboard')->with('message', $msg);
             }
         } else {
             return redirect()->route('login')->with('status', 'Username atau Password anda salah')->withInput();

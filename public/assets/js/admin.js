@@ -17,6 +17,23 @@ let alertError = $('.alert-error').text()
 if (alertError != '') {
     toastr.error(alertError)
 }
+let messageInvoice = $('.flash-message').text()
+if (messageInvoice != '') {
+    Swal.fire({
+        title: "Info",
+        html: `${messageInvoice}`,
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Lihat Invoice",
+        cancelButtonText: "Close",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/invoice'
+        }
+    });
+}
 
 jQuery.validator.setDefaults({
     errorElement: 'span',

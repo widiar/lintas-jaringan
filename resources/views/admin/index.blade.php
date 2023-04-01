@@ -55,6 +55,11 @@
             {{session('error')}}
         </div>
         @endif
+        @if (session('message'))
+        <div class="d-none flash-message">
+            {{ session('message') }}
+        </div>
+        @endif
         @include('admin.navbar')
 
         @include('admin.sidebar')
