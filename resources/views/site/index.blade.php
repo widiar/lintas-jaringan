@@ -113,7 +113,7 @@
                         <a href="{{ route('paket', $paket->id) }}">Pilih Paket</a>
                         @endauth
                     </div>
-                    <a href="https://api.whatsapp.com/send?phone=6283189871080&text=Hallo, saya ingin bertanya mengenai {{ $paket->judul }}"
+                    <a href="https://api.whatsapp.com/send?phone=6287750142697&text=Hallo, saya ingin bertanya mengenai {{ $paket->judul }}"
                         class="text-sm">Tanyakan</a>
                 </div>
             </div>
@@ -181,12 +181,28 @@
                     <h2><em>Masukan anda</em> anda sangat <span>berarti</span> untuk kami</h2>
                     <div id="map">
                         <iframe
-                            src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            width="100%" height="360px" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3945.3712271438458!2d115.33874999999996!3d-8.560255999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMzMnMzYuOSJTIDExNcKwMjAnMTkuNSJF!5e0!3m2!1sen!2sid!4v1680444464670!5m2!1sen!2sid"
+                            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="info">
-                        <span><i class="fa fa-phone"></i> <a href="#">010-020-0340<br>090-080-0760</a></span>
-                        <span><i class="fa fa-envelope"></i> <a href="#">info@company.com<br>mail@company.com</a></span>
+                        <span>
+                            <i class="fa fa-phone"></i>
+                            <a href="#" class="phone-info">
+                                <elem href="https://api.whatsapp.com/send?phone=6287750142697">+62 877-5014-2697</elem>
+                                <br>
+                                <elem href="https://api.whatsapp.com/send?phone=6281913434057">+62 819-1343-4057</elem>
+                            </a>
+                            {{-- <div class="col">
+                                <a href="">+62 877-5014-2697</a>
+                            </div> --}}
+                        </span>
+                        <span>
+                            <i class="fa fa-envelope"></i>
+                            <div class="col">
+                                <a href="mailto:globaltechonolgy2020@gmail.com">globaltechonolgy2020@gmail.com</a>
+                            </div>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -231,6 +247,12 @@
 
 @section('script')
 <script>
+    $('.phone-info')..click(function(e){
+        e.preventDefault()
+    })
+    $('.info a elem').click(function(e){
+        window.location.href = $(this).attr('href')
+    })
     $('#contact').validate({
         rules: {
             name: 'required',
