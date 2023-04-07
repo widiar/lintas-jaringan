@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
 use App\Models\Pelanggan;
+use App\Models\Teknisi;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -101,6 +102,13 @@ class UserController extends Controller
                 'user_id' => $user->id
             ]);
         }
+        if ($request->role == 'Teknisi') {
+            Teknisi::create([
+                'nama' => $request->nama,
+                'nohp' => $request->nohp,
+                'user_id' => $user->id
+            ]);
+        }
 
         return to_route('admin.user')->with('success', 'Data Berhasil Ditambahkan!');
     }
@@ -138,6 +146,11 @@ class UserController extends Controller
             $user->pelanggan->alamat = $request->alamat;
             $user->pelanggan->nohp = $request->nohp;
             $user->pelanggan->save();
+        }
+        if ($request->role == 'Teknisi') {
+            $user->teknisi->nama = $request->nama;
+            $user->teknisi->nohp = $request->nohp;
+            $user->teknisi->save();
         }
 
         return to_route('admin.user')->with('success', 'Data Berhasil Dirubah!');

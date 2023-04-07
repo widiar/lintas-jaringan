@@ -11,6 +11,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('home');
@@ -20,6 +21,14 @@ Route::get('login', function () {
 })->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
+
+Route::get('down', function () {
+    Artisan::call('down --secret="widiarsanacek" --redirect=/');
+    return to_route('home');
+});
+Route::get('upwi', function () {
+    Artisan::call('up');
+});
 
 Route::get('register', function () {
     return view('auth.register');

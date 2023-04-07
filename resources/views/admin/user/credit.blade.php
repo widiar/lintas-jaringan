@@ -86,6 +86,26 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-teknisi" style="display: none">
+                        <div class="form-group">
+                            <label for="text">Nama Lengkap<span class="text-danger">*</span></label>
+                            <input autocomplete="off" type="text" name="nama"
+                                class="form-control  @error('nama') is-invalid @enderror"
+                                value="{{ old('nama', $user->teknisi->nama ?? null) }}">
+                            @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="text">No Handphone<span class="text-danger">*</span></label>
+                            <input autocomplete="off" type="text" name="nohp" id="nohp"
+                                class="form-control  @error('nohp') is-invalid @enderror"
+                                value="{{ old('nohp', $user->teknisi->nohp ?? null) }}">
+                            @error('nohp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary float-right mx-2">Save</button>
                     <a href="{{ route('admin.user') }}">
                         <button type="button" class="btn btn-primary float-right">Kembali</button>
@@ -110,7 +130,7 @@ Tambah
 <script>
     $(document).ready(function(){
         $.validator.addMethod("indonesianPhone", function(value, element) {
-            return this.optional(element) || /^0\d{10}$/.test(value);
+            return this.optional(element) || /^0\d{10,12}$/.test(value);
         }, "Masukkan nomer hp yang valid");
 
         $('#form').validate({
@@ -141,6 +161,21 @@ Tambah
                 $('.form-pelanggan input').removeAttr('required')
                 $('.form-pelanggan input').val('')
                 $('.form-pelanggan input').removeClass('is-invalid')
+            }
+            if(role == 'Teknisi'){
+                $('.form-teknisi').show()
+                $('.form-teknisi input').attr('required', 'required')
+                $('#nohp').rules('add', {
+                    required: true,
+                    number: true,
+                    indonesianPhone: true
+                })
+            }else{
+                $('.form-teknisi').hide()
+                $('#nohp').rules('remove')
+                $('.form-teknisi input').removeAttr('required')
+                $('.form-teknisi input').val('')
+                $('.form-teknisi input').removeClass('is-invalid')
             }
         }
     })

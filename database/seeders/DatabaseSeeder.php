@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
         if (is_null($roleP))
             Role::create(['name' => 'Pelanggan']);
 
+        $roleP = Role::where('name', 'Teknisi')->first();
+        if (is_null($roleP))
+            Role::create(['name' => 'Teknisi']);
+
         $role = Role::where('name', 'super admin')->first();
         if (is_null($role))
             $role = Role::create(['name' => 'super admin']);

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'email_verified_at'
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
     public function pelanggan()
     {
         return $this->hasOne(Pelanggan::class, 'user_id');
+    }
+
+    public function teknisi()
+    {
+        return $this->hasOne(Teknisi::class, 'user_id');
     }
 }
