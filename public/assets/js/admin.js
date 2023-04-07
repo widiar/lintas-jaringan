@@ -17,7 +17,26 @@ let alertError = $('.alert-error').text()
 if (alertError != '') {
     toastr.error(alertError)
 }
+
+const fireSwal2 = (msg) => {
+    Swal.fire({
+        title: "Info",
+        html: `${msg}`,
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Lihat Invoice",
+        cancelButtonText: "Close",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/invoice?status=RESCHEDULE'
+        }
+    });
+}
+
 let messageInvoice = $('.flash-message').text()
+let messageInvoice2 = $('.flash-message2').text()
 if (messageInvoice != '') {
     Swal.fire({
         title: "Info",
@@ -27,13 +46,31 @@ if (messageInvoice != '') {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Lihat Invoice",
+        backdrop: 'static',
+        keyboard: false,
         cancelButtonText: "Close",
+        onCloseModal: function () {
+            if (messageInvoice2 != '') {
+                fireSwal2(messageInvoice2)
+            }
+        },
     }).then((result) => {
+        console.log(result)
         if (result.isConfirmed) {
-            window.location.href = '/invoice'
+            if (messageInvoice2 != '') {
+                fireSwal2(messageInvoice2)
+            } else {
+                window.location.href = '/invoice'
+            }
+        }
+        if (result.isDismissed) {
+            if (messageInvoice2 != '') {
+                fireSwal2(messageInvoice2)
+            }
         }
     });
 }
+
 
 jQuery.validator.setDefaults({
     errorElement: 'span',

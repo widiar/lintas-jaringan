@@ -48,7 +48,7 @@ class PerubahanTanggalPasangMail extends Mailable
             markdown: 'emails.invoice.perubahan',
             with: [
                 'data' => $this->data,
-                'user' => User::with('pelanggan')->where('id', $this->data->user_id)->first()
+                'user' => User::with('pelanggan')->where('id', $this->data->user_id)->first('id')
             ]
         );
     }

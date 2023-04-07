@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('edit-profile', [AuthController::class, 'editProfilePost']);
     Route::post('change-password', [AuthController::class, 'changePassword'])->name('change.password');
 
+    Route::get('list-teknisi', [InvoiceController::class, 'listTeknisi'])->name('list.teknisi');
+
     //manage invoice
     Route::controller(InvoiceController::class)->group(function () {
         Route::prefix('invoice/')->group(function () {

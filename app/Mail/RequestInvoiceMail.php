@@ -48,7 +48,7 @@ class RequestInvoiceMail extends Mailable
             markdown: 'emails.invoice.request',
             with: [
                 'data' => $this->data,
-                'user' => User::with('pelanggan')->where('id', $this->data->user_id)->first()
+                'user' => User::with('pelanggan')->where('id', $this->data->user_id)->first('id')
             ]
         );
     }

@@ -10,15 +10,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PaidInvoiceMail extends Mailable
+class DoneInvocieMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     private $data;
     public function __construct($data)
     {
@@ -33,7 +28,7 @@ class PaidInvoiceMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Pembayaran Berhasil',
+            subject: 'Pemasangan Selesai',
         );
     }
 
@@ -45,7 +40,7 @@ class PaidInvoiceMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.invoice.paid',
+            markdown: 'emails.invoice.done',
             with: [
                 'data' => $this->data,
                 'user' => User::with('pelanggan')->where('id', $this->data->user_id)->first('id')

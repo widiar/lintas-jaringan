@@ -247,7 +247,7 @@
 
 @section('script')
 <script>
-    $('.phone-info')..click(function(e){
+    $('.phone-info').click(function(e){
         e.preventDefault()
     })
     $('.info a elem').click(function(e){

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DoneInvocieMail;
 use App\Mail\PerubahanTanggalPasangMail;
 use App\Models\Invoice;
+use App\Models\Teknisi;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,16 +24,21 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        Invoice::where('status', 'PENDING')
-            ->whereDate('created_at', '<', Carbon::now()->subDay())
-            ->update(['status' => 'EXPIRED']);
+        // Invoice::where('status', 'PENDING')
+        //     ->whereDate('created_at', '<', Carbon::now()->subDay())
+        //     ->update(['status' => 'EXPIRED']);
         $user = Auth::user();
         if ($request->ajax()) {
             if ($user->hasRole('Pelanggan')) {
-                $data = Invoice::with('user', 'user.pelanggan')->where('user_id', $user->id)->get();
+                $data = Invoice::with('user', 'user.pelanggan')->where('user_id', $user->id);
+            } else if ($user->hasRole('Teknisi')) {
+                $user = User::with('teknisi')->where('id', $user->id)->first();
+                $data = Invoice::with('user', 'user.pelanggan')->where('teknisi_id', $user->teknisi->id);
             } else {
-                $data = Invoice::with('user', 'user.pelanggan')->get();
+                $data = Invoice::with('user', 'user.pelanggan');
             }
+            if (!is_null($request->status)) $data->where('status', $request->status);
+            $data->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
@@ -48,6 +55,7 @@ class InvoiceController extends Controller
                     if ($row['status'] == 'PAID') return '<span class="badge badge-success">' . $row['status'] . '</span>';
                     else if ($row['status'] == 'PENDING') return '<span class="badge badge-warning">' . $row['status'] . '</span>';
                     else if ($row['status'] == 'PROSES') return '<span class="badge badge-info">' . $row['status'] . '</span>';
+                    else if ($row['status'] == 'RESCHEDULE') return '<span class="badge badge-warning">' . $row['status'] . '</span>';
                     else if ($row['status'] == 'DONE') return '<span class="badge badge-success">' . $row['status'] . '</span>';
                     else return '<span class="badge badge-danger">' . $row['status'] . '</span>';
                 })
@@ -95,29 +103,59 @@ class InvoiceController extends Controller
     {
         $data = Invoice::where('id', Hashids::decode($id))->first();
         if (is_null($data)) abort(404);
-        return view('admin.invoice.edit', compact('data'));
+        $teknisi = null;
+        if (!is_null($data->teknisi_id)) {
+            $teknisi = Teknisi::find($data->teknisi_id);
+        }
+        return view('admin.invoice.edit', compact('data', 'teknisi'));
+    }
+
+    public function listTeknisi(Request $request)
+    {
+        $search = $request->search;
+        $teknisis = Teknisi::where('nama', 'like', "%$search%")->get(['id', 'nohp', 'nama']);
+        $data = [];
+        foreach ($teknisis as $teknisi) {
+            $dt = [
+                'id' => $teknisi->id,
+                'text' => $teknisi->nama,
+                'nohp' => $teknisi->nohp
+            ];
+            array_push($data, $dt);
+        }
+        return $data;
     }
 
     public function update(Request $request, $id)
     {
         $data = Invoice::where('id', Hashids::decode($id))->first();
         if (is_null($data)) abort(404);
-
+        // dd($request->all());
         $error = 0;
         if ($data->status != $request->status) {
             if ($data->status == 'DONE') $error = 1;
             if (($data->status == 'PROSES') && ($request->status == 'PAID' || $request->status == 'PENDING')) $error = 1;
+            if (($data->status == 'RESCHEDULE') && ($request->status == 'PAID' || $request->status == 'PENDING')) $error = 1;
             if ($data->status == 'PAID' && $request->status == 'PENDING') $error = 1;
         }
         if ($error == 1) {
             return response()->json(['status' => 'failed', 'message' => 'Status tidak dapat dirubah mundur']);
         }
         $user = User::where('id', $data->user_id)->first();
+        if ($request->status == 'RESCHEDULE') {
+            // if ($data->tanggal_pasang != $request->tanggal_pasang) {
+            //     // send email bahwa ada perubahan tanggal pasang
+            // }
+            $data->keterangan_res = $request->keterangan_res;
+            $data->reschedule = $request->reschedule;
+            Mail::to($user->email)->send(new PerubahanTanggalPasangMail($data));
+        }
         if ($request->status == 'PROSES') {
-            if ($data->tanggal_pasang != $request->tanggal_pasang) {
-                // send email bahwa ada perubahan tanggal pasang
-                Mail::to($user->email)->send(new PerubahanTanggalPasangMail($data));
-            }
+            if (!auth()->user()->hasRole('Teknisi'))
+                $data->teknisi_id = $request->teknisi;
+        }
+        if ($request->status == 'DONE') {
+            Mail::to($user->email)->send(new DoneInvocieMail($data));
         }
         $data->status = $request->status;
         $data->tanggal_pasang = $request->tanggal_pasang;

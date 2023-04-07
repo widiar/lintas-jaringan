@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DoneInvocieMail;
 use App\Mail\PaidInvoiceMail;
 use App\Mail\PerubahanTanggalPasangMail;
 use App\Mail\RequestInvoiceMail;
@@ -137,10 +138,10 @@ class SiteController extends Controller
     {
         $now = Carbon::now();
         // dd($now->addDays(15)->format('Y-m-d'));
-        $data = Invoice::find(1);
+        $data = Invoice::find(7);
         // dd(json_decode($data->xendit)->invoice_url);
         // return $pdf->stream();
-        return (new PerubahanTanggalPasangMail($data))->render();
+        return (new DoneInvocieMail($data))->render();
     }
     // ----- DEBUG ONLY -----
 

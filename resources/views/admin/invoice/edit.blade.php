@@ -101,24 +101,69 @@
                     @csrf
                     <div class="form-group">
                         <label for="text">Status<span class="text-danger">*</span></label>
-                        <select name="status" class="form-control" id="status" required>
+                        <select name="status" class="form-control select2" id="status" required>
                             <option @if($data->status == 'PENDING') selected @endif value="PENDING">PENDING</option>
                             <option @if($data->status == 'PAID') selected @endif value="PAID">PAID</option>
                             <option @if($data->status == 'PROSES') selected @endif value="PROSES">PROSES</option>
+                            <option @if($data->status == 'RESCHEDULE') selected @endif value="RESCHEDULE">RESCHEDULE
+                            </option>
                             <option @if($data->status == 'DONE') selected @endif value="DONE">DONE</option>
                         </select>
                         @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group tanggal" style="display: none">
+                    <div class="form-group">
                         <label for="text">Tanggal Pasang<span class="text-danger">*</span></label>
-                        <input autocomplete="off" type="date" id="tanggal_pasang" required name="tanggal_pasang"
+                        <input autocomplete="off" type="date" id="tanggal_pasang" readonly name="tanggal_pasang"
                             class="form-control  @error('tanggal_pasang') is-invalid @enderror"
                             value="{{ old('tanggal_pasang', $data->tanggal_pasang ?? null) }}">
                         @error('tanggal_pasang')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+                    <div class="tanggal_res" style="display: none">
+                        <div class="form-group">
+                            <label for="text">Tanggal Reschedule<span class="text-danger">*</span></label>
+                            <input autocomplete="off" type="date" id="reschedule" name="reschedule"
+                                class="form-control  @error('reschedule') is-invalid @enderror"
+                                value="{{ old('reschedule', $data->reschedule ?? null) }}">
+                            @error('reschedule')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="text">Keterangan Reschedule<span class="text-danger">*</span></label>
+                            <input autocomplete="off" type="text" name="keterangan_res"
+                                class="form-control  @error('keterangan_res') is-invalid @enderror"
+                                value="{{ old('keterangan_res', $data->keterangan_res ?? null) }}">
+                            @error('keterangan_res')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="tanggal" style="display: none">
+                        <div class="form-group">
+                            <label for="text">Teknisi<span class="text-danger">*</span></label>
+                            <select required class="form-control teknisi" name="teknisi" @role('Teknisi') disabled
+                                @endrole id="teknisi">
+                                @if(!is_null($teknisi))
+                                <option value="{{ $teknisi->id }}">{{ $teknisi->nama }}</option>
+                                @endif
+                            </select>
+                            @error('teknisi')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="text">No Handphone Teknisi<span class="text-danger">*</span></label>
+                            <input autocomplete="off" type="text" readonly name="nohp"
+                                class="form-control nohpteknisi @error('nohp') is-invalid @enderror"
+                                value="{{ old('nohp', $teknisi->nohp ?? null) }}">
+                            @error('nohp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                     <a href="{{ route('invoice') }}">
                         <button type="button" class="btn btn-primary">Kembali</button>
@@ -139,10 +184,44 @@
 
 @section('script')
 <script>
+    $(document).ready(function(){
+        $(".teknisi").select2({
+            theme: "bootstrap4",
+            minimumInputLength: 2,
+            placeholder: 'Pilih teknisi',
+            width: '100%',
+            ajax: {
+                url: `{{ route('list.teknisi') }}`,
+                dataType: 'json',
+                delay: 1000,
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    // console.log(data)
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });
+        $('.teknisi').on('select2:select', function (e) {
+            // Ambil data yang dipilih
+            let data = e.params.data;
+            
+            $('.nohpteknisi').val(data.nohp)
+        });
+    })
     $('.harga').simpleMoneyFormat();
     let status = $('#status').val()
     if(status == 'PROSES'){
         $('.tanggal').show()
+    }
+    if(status == 'RESCHEDULE'){
+        $('.tanggal_res').show()
     }
     $('#status').change(function(e){
         let val = $(this).val()
@@ -151,11 +230,17 @@
         }else{
             $('.tanggal').hide()
         }
+        if(val == 'RESCHEDULE'){
+            $('.tanggal_res').show()
+        }else{
+            $('.tanggal_res').hide()
+        }
     })
     let formValidation = $('#form').validate({
         rules:{
             status: 'required',
             tanggal_pasang: 'required',
+            teknisi: 'required'
         },
         submitHandler: function(form, e) {
             // e.preventDefault()
