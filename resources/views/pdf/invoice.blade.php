@@ -153,7 +153,7 @@
                                     <table width="100%" cellspacing="0" cellpadding="0">
                                         <tr>
                                             <td colspan="2">
-                                                <img src="https://uilogos.co/img/logotype/circle.png"
+                                                <img src="https://lintas-jaringan.up.railway.app/assets/images/LJN-1.png"
                                                     alt="Lintas Jaringan Logo"
                                                     style="margin-bottom: 15px; width: 147px;">
                                             </td>
@@ -300,7 +300,7 @@
                                                     <table width="100%"
                                                         style="width: 430px; margin-top: 15px; padding: 15px; border-radius: 4px; border: thin solid rgba(0, 0, 0, 0.54); font-size: 14px; font-weight: 600;">
                                                         <tr>
-                                                            <td>Tax PPN</td>
+                                                            <td>Biaya Pasang</td>
                                                             <td style="text-align: right;">
                                                                 Rp {{ number_format($inv->ppn, 2, ',', '.') }}
                                                             </td>

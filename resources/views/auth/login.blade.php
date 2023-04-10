@@ -129,6 +129,12 @@
                     username: 'required',
                     password: 'required',
                 },
+                submitHandler: function(form, e) {
+                    // e.preventDefault()
+                    $('button[type="submit"]').attr('disabled', 'disabled')
+                    $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
+                    form.submit();
+                }
             })
         })
     </script>

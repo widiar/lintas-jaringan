@@ -104,8 +104,8 @@ class UserController extends Controller
         }
         if ($request->role == 'Teknisi') {
             Teknisi::create([
-                'nama' => $request->nama,
-                'nohp' => $request->nohp,
+                'nama' => $request->namatek,
+                'nohp' => $request->nohptek,
                 'user_id' => $user->id
             ]);
         }
@@ -148,8 +148,8 @@ class UserController extends Controller
             $user->pelanggan->save();
         }
         if ($request->role == 'Teknisi') {
-            $user->teknisi->nama = $request->nama;
-            $user->teknisi->nohp = $request->nohp;
+            $user->teknisi->nama = $request->namatek;
+            $user->teknisi->nohp = $request->nohptek;
             $user->teknisi->save();
         }
 

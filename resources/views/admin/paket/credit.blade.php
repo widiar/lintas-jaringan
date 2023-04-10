@@ -162,6 +162,12 @@ Tambah
                 show:{
                     remote: 'Tampilan show hanya max 3. Data Paket yang di show sudah lebih dari 3.'
                 }
+            },
+            submitHandler: function(form, e) {
+                // e.preventDefault()
+                $('button[type="submit"]').attr('disabled', 'disabled')
+                $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
+                form.submit();
             }
         })
     })

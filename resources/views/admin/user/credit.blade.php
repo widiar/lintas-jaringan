@@ -89,19 +89,19 @@
                     <div class="form-teknisi" style="display: none">
                         <div class="form-group">
                             <label for="text">Nama Lengkap<span class="text-danger">*</span></label>
-                            <input autocomplete="off" type="text" name="nama"
-                                class="form-control  @error('nama') is-invalid @enderror"
-                                value="{{ old('nama', $user->teknisi->nama ?? null) }}">
-                            @error('nama')
+                            <input autocomplete="off" type="text" name="namatek"
+                                class="form-control  @error('namatek') is-invalid @enderror"
+                                value="{{ old('namatek', $user->teknisi->nama ?? null) }}">
+                            @error('namatek')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="text">No Handphone<span class="text-danger">*</span></label>
-                            <input autocomplete="off" type="text" name="nohp" id="nohp"
-                                class="form-control  @error('nohp') is-invalid @enderror"
-                                value="{{ old('nohp', $user->teknisi->nohp ?? null) }}">
-                            @error('nohp')
+                            <input autocomplete="off" type="text" name="nohptek" id="nohptek"
+                                class="form-control  @error('nohptek') is-invalid @enderror"
+                                value="{{ old('nohptek', $user->teknisi->nohp ?? null) }}">
+                            @error('nohptek')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -138,6 +138,12 @@ Tambah
                 name: 'required',
                 role: 'required'
             },
+            submitHandler: function(form, e) {
+                // e.preventDefault()
+                $('button[type="submit"]').attr('disabled', 'disabled')
+                $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
+                form.submit();
+            }
         })
         let roleval = $('#role').val()
         showFormPelanggan(roleval)
@@ -165,14 +171,14 @@ Tambah
             if(role == 'Teknisi'){
                 $('.form-teknisi').show()
                 $('.form-teknisi input').attr('required', 'required')
-                $('#nohp').rules('add', {
+                $('#nohptek').rules('add', {
                     required: true,
                     number: true,
                     indonesianPhone: true
                 })
             }else{
                 $('.form-teknisi').hide()
-                $('#nohp').rules('remove')
+                $('#nohptek').rules('remove')
                 $('.form-teknisi input').removeAttr('required')
                 $('.form-teknisi input').val('')
                 $('.form-teknisi input').removeClass('is-invalid')

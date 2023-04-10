@@ -170,8 +170,11 @@
                     email: 'required'
                 },
                 submitHandler: function(form) {
-                    $('.login100-form-btn').attr('disabled', 'disabled')
-                    $(form).submit();
+                    $('button[type="submit"]').attr('disabled', 'disabled')
+                    $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
+                    form.submit()
+                    // $('.login100-form-btn').attr('disabled', 'disabled')
+                    // $(form).submit();
                 }
             })
         })
