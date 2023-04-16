@@ -12,10 +12,12 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="#services">Services</a></li>
-                        <li class="scroll-to-section"><a href="#pricing">Pricing</a></li>
-                        <li class="scroll-to-section"><a href="#about">About</a></li>
-                        <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                        <li class="scroll-to-section"><a href="#services">Layanan</a></li>
+                        <li class="scroll-to-section"><a href="#pricing">Harga</a></li>
+                        <li class="scroll-to-section"><a href="#about">Tentang</a></li>
+                        <li class="scroll-to-section"><a href="#contact">Hubungi Kami</a></li>
+                        <li class="scroll-to-section"><a href="https://lintasjaringan.speedtestcustom.com/"
+                                target="_blank" rel="noreferrer noopener">Speed Test</a></li>
                         @guest
                         <li class="">
                             <div class="main-red-button-hover"><a href="{{ route('login') }}">Login</a></div>
