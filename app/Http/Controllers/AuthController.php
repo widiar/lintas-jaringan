@@ -24,28 +24,28 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('username', $request->username)->first();
         $cre = [
             'username' => $request->username,
             'password' => $request->password
         ];
-        $msg2 = '';
-        if ($user->hasRole('Pelanggan')) $msg = '';
-        else if ($user->hasRole('Teknisi')) {
-            $teknisi = Teknisi::where('user_id', $user->id)->first();
-            $jml = Invoice::where('status', 'PROSES')->where('teknisi_id', $teknisi->id)->count();
-            $res = Invoice::where('status', 'RESCHEDULE')->where('teknisi_id', $teknisi->id)->count();
-            $msg = 'Terdapat ' . $jml . ' invocie yang harus dipasang dan ' . $res . ' yang di reschedule.';
-        } else {
-            $pending = Invoice::where('status', 'PENDING')->count();
-            $paid = Invoice::where('status', 'PAID')->count();
-            $msg = 'Terdapat Pembelian terbaru dengan total <br>' . $pending . ' belum bayar dan ' . $paid . ' sudah dibayar';
-
-            $res = Invoice::where('status', 'RESCHEDULE')->count();
-            if ($res > 0)
-                $msg2 = 'Terdapat ' . $res . ' invoice yang harus di <b>Reschedule</b>';
-        }
         if (Auth::attempt($cre)) {
+            $user = User::where('username', $request->username)->first();
+            $msg2 = '';
+            if ($user->hasRole('Pelanggan')) $msg = '';
+            else if ($user->hasRole('Teknisi')) {
+                $teknisi = Teknisi::where('user_id', $user->id)->first();
+                $jml = Invoice::where('status', 'PROSES')->where('teknisi_id', $teknisi->id)->count();
+                $res = Invoice::where('status', 'RESCHEDULE')->where('teknisi_id', $teknisi->id)->count();
+                $msg = 'Terdapat ' . $jml . ' invocie yang harus dipasang dan ' . $res . ' yang di reschedule.';
+            } else {
+                $pending = Invoice::where('status', 'PENDING')->count();
+                $paid = Invoice::where('status', 'PAID')->count();
+                $msg = 'Terdapat Pembelian terbaru dengan total <br>' . $pending . ' belum bayar dan ' . $paid . ' sudah dibayar';
+    
+                $res = Invoice::where('status', 'RESCHEDULE')->count();
+                if ($res > 0)
+                    $msg2 = 'Terdapat ' . $res . ' invoice yang harus di <b>Reschedule</b>';
+            }
             if (isset($request->next))
                 return redirect($request->next)->with('message', $msg);
             if ($user->hasRole('Pelanggan')) {
