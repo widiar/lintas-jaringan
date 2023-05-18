@@ -204,6 +204,20 @@
                             </div>
                         </span>
                     </div>
+                    <div class="info" style="margin-top: 10px">
+                        <span style="margin-right: 50px">
+                            <i class="fa fa-instagram"></i>
+                            <div class="col">
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/ptljnindonesia">@ptljnindonesia   </a>
+                            </div>
+                        </span>
+                        <span>
+                            <i class="fa fa-facebook"></i>
+                            <div class="col">
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Lintasjaringannusantara/">PT. Lintas Jaringan Nusantara</a>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-5 align-self-center">

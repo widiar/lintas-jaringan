@@ -152,7 +152,7 @@
             }
         });
         $.validator.addMethod("indonesianPhone", function(value, element) {
-            return this.optional(element) || /^0\d{10,12}$/.test(value);
+            return this.optional(element) || /^0\d{09,13}$/.test(value);
         }, "Masukkan nomer hp yang valid");
 
         $(document).ready(function(){
