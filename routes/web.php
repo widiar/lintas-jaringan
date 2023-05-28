@@ -22,13 +22,6 @@ Route::get('login', function () {
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
-Route::get('down', function () {
-    Artisan::call('down --secret="widiarsanacek" --redirect=/');
-    return to_route('home');
-});
-Route::get('upwi', function () {
-    Artisan::call('up');
-});
 
 Route::get('register', function () {
     return view('auth.register');

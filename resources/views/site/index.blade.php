@@ -189,7 +189,7 @@
                         <span>
                             <i class="fa fa-phone"></i>
                             <a href="#" class="phone-info">
-                                <elem href="https://api.whatsapp.com/send?phone=6287750142697">+62 877-5014-2697</elem>
+                                <elem href="https://api.whatsapp.com/send?phone=6281996230637">+62 819-9623-0637</elem>
                                 <br>
                                 <elem href="https://api.whatsapp.com/send?phone=6281913434057">+62 819-1343-4057</elem>
                             </a>
