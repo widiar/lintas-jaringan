@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\RegisterUser;
+use App\Mail\ResetPasswordMail;
 use App\Models\Invoice;
+use App\Models\PasswordReset;
 use App\Models\Pelanggan;
 use App\Models\Teknisi;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -141,5 +144,72 @@ class AuthController extends Controller
         $user->password = Hash::make($request->passwordBaru);
         $user->save();
         return response()->json(['status' => 'success']);
+    }
+
+    public function forgot()
+    {
+        return view('auth.forgot');
+    }
+
+    public function postForgot(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+        ]);
+
+        $user = User::where('email', $request->username)->orWhere('username', $request->username)->first();
+        if($user){
+            if($user->hasRole('Pelanggan')){
+                if(!is_null($user->email_verified_at)){
+                    PasswordReset::where('email', $user->email)->delete();
+                    $token = base64_encode(random_bytes(17));
+                    PasswordReset::insert([
+                        'email' => $user->email,
+                        'token' => $token,
+                        'created_at' => Carbon::now()
+                    ]);
+                    Mail::to($user->email)->send(new ResetPasswordMail($user->email, $token));
+                    return redirect()->route('forgot-password')->with('success', 'Silahkan Cek Email Anda.');
+                }else{
+                    return to_route('forgot-password')->with('status', 'Email atau username belum aktif.');
+                }
+
+            }
+        }
+        return to_route('forgot-password')->with('status', 'Email atau username tidak terdaftar.');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $email = urldecode($request->get('email'));
+        $token = urldecode($request->get('token'));
+        // dd($token, $email);
+        if(!(empty($email)) && !empty($token)){
+            $passwordReset = PasswordReset::where('email', $email)->firstOrFail();
+            $expire = new DateTime($passwordReset->created_at);
+            $expire->modify('+12 hour');
+            if (new DateTime() < $expire) {
+                if (strcmp($token, $passwordReset->token) == 0) {
+                    return view('auth.reset');
+                }
+            }
+            return to_route('login')->with('status', 'Link Expired');
+        }
+        return to_route('login');
+    }
+
+    public function resetPasswordPost(Request $request)
+    {
+        $email = urldecode($request->get('email'));
+        $token = urldecode($request->get('token'));
+
+        if(!(empty($email)) && !empty($token)){
+            $user = User::where('email', $email)->first();
+            $user->password = Hash::make($request->password);
+            $user->save();
+            PasswordReset::where('email', $email)->delete();
+            return to_route('login')->with('success', 'Password berhasil diubah silahkan login');
+        }
+        return to_route('login');
     }
 }

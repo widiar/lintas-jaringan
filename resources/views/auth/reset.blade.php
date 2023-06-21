@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login</title>
+    <title>Reset Password</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -28,15 +28,11 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{{ asset('assets/images/img-01.png') }}" alt="IMG">
-                </div>
-
-                <form class="login100-form validate-form" method="POST" action="{{ route('login.post') }}">
+            <div class="wrap-login100" style="padding-top: 75px; padding-bottom: 20px">
+                <form class="login100-form validate-form" method="POST" action="">
                     @csrf
                     <span class="login100-form-title">
-                        Member Login
+                        Reset Password
                     </span>
                     @if(session('success'))
                     <div class="alert alert-success">
@@ -47,45 +43,39 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <div class="wrap-input100 validate-input">
-                        <input autocomplete="off" class="input100" type="text" name="username" placeholder="Username">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </span>
-                    </div>
 
                     <div class="wrap-input100 validate-input">
-                        <input class="input100" type="password" name="password" placeholder="Password">
+                        <input class="input100" type="password" name="password" id="password" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <input type="hidden" name="next" value="{{ request()->get('next') }}">
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="password" name="confirmPassword" placeholder="Confirm Password">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
-                            Login
+                            Reset Password
                         </button>
                     </div>
 
-                    <div class="text-center p-t-12">
-                        <span class="txt1">
-                            Lupa
-                        </span>
-                        <a class="txt2" href="{{ route('forgot-password') }}">
-                            Password?
-                        </a>
-                    </div>
-
-                    <div class="text-center p-t-136">
-                        <a class="txt2" href="{{ route('register') }}">
-                            Buat akun
-                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                    <div class="text-center p-t-136" style="padding-top: 80px">
+                        <a class="txt2" href="{{ route('login') }}">
+                            <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
+                            Login
                         </a>
                     </div>
                 </form>
+                <div class="login100-pic js-tilt" style="" data-tilt>
+                    <img src="{{ asset('assets/images/img-01.png') }}" alt="IMG">
+                </div>
+
             </div>
         </div>
     </div>
@@ -123,17 +113,25 @@
                 $(element).parent().removeClass('alert-validate');
             }
         });
+        $.validator.addMethod("indonesianPhone", function(value, element) {
+            return this.optional(element) || /^0\d{09,13}$/.test(value);
+        }, "Masukkan nomer hp yang valid");
+
         $(document).ready(function(){
             $('.validate-form').validate({
                 rules: {
-                    username: 'required',
                     password: 'required',
+                    confirmPassword: {
+                        required: true,
+                        equalTo: "#password"
+                    }
                 },
-                submitHandler: function(form, e) {
-                    // e.preventDefault()
+                submitHandler: function(form) {
                     $('button[type="submit"]').attr('disabled', 'disabled')
                     $('button[type="submit"]').html(`<i class="fa fa-spinner fa-spin"></i> Processing`)
-                    form.submit();
+                    form.submit()
+                    // $('.login100-form-btn').attr('disabled', 'disabled')
+                    // $(form).submit();
                 }
             })
         })
