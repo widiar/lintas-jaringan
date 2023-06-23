@@ -33,7 +33,7 @@
                     <img src="{{ asset('assets/images/img-01.png') }}" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form" method="POST" action="{{ route('forgot-password') }}">
+                <form class="login100-form validate-form" method="POST" action="">
                     @csrf
                     <span class="login100-form-title">
                         Lupa Password
