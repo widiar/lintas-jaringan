@@ -97,6 +97,17 @@
                     </a>
                 </li>
                 @endcan
+                @can('view_area')
+                <li class="nav-item">
+                    <a href="{{ route('admin.area') }}"
+                        class="nav-link{{ str_contains(Route::currentRouteName(), 'admin.area') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-map"></i>
+                        <p>
+                            Area
+                        </p>
+                    </a>
+                </li>
+                @endcan
                 @role('Pelanggan')
                 <li class="nav-item">
                     <a href="{{ route('edit.profile') }}"

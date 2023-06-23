@@ -6,9 +6,14 @@ use App\Mail\DoneInvocieMail;
 use App\Mail\PaidInvoiceMail;
 use App\Mail\PerubahanTanggalPasangMail;
 use App\Mail\RequestInvoiceMail;
+use App\Models\Area;
 use App\Models\Banner;
 use App\Models\Invoice;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use App\Models\Paket;
+use App\Models\Pelanggan;
 use App\Models\Saran;
 use App\Models\Service;
 use App\Models\User;
@@ -36,7 +41,20 @@ class SiteController extends Controller
         $data = Paket::where('id', $id)->first();
         if (is_null($data)) abort(404);
         $user = Auth::user()->pelanggan;
-        return view('site.paket', compact('data', 'user'));
+        $kabupaten = Kabupaten::where('id', $user->id_kabupaten)->first();
+        $kecamatan = Kecamatan::where('id', $user->id_kecamatan)->first();
+        $kelurahan = NULL;
+        if(!is_null($user->id_kelurahan)){
+            $kelurahan = Kelurahan::where('id', $user->id_kelurahan)->first();
+        }
+        $area = Area::get();
+        $pathArea = [];
+        foreach ($area as $ar) {
+            $pathArea [] = json_decode($ar->path);
+        }
+        // dd($pathArea);
+        // dd($kabupaten, $kecamatan, $kelurahan);
+        return view('site.paket', compact('data', 'user', 'kabupaten', 'kecamatan', 'kelurahan', 'pathArea'));
     }
 
     public function beliPaket(Request $request)
@@ -47,6 +65,11 @@ class SiteController extends Controller
         $user = Auth::user();
         $paket = Paket::where('id', $request->id)->first();
         if (is_null($paket)) abort(405);
+        $pelanggan = Pelanggan::where('user_id', $user->id)->first();
+        $pelanggan->id_kabupaten = $request->kabupaten;
+        $pelanggan->id_kecamatan = $request->kecamatan;
+        $pelanggan->id_kelurahan = $request->kelurahan;
+        $pelanggan->save();
         $ppn = round($paket->harga * 0.11);
         $ppn = 250000;
         $total = $paket->harga + $ppn;
@@ -160,6 +183,26 @@ class SiteController extends Controller
         } else {
             return response()->json([
                 'status' => 'failed'
+            ]);
+        }
+    }
+
+    public function checkArea(Request $request)
+    {
+        if(is_null($request->kelurahan)){
+            $data = Area::where('id_kecamatan', $request->kecamatan)->first();
+        }else{
+            $data = Area::where('id_kelurahan', $request->kelurahan)->first();
+        }
+        if($data){
+            return response()->json([
+                'message' => 'success',
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'failed',
+                'data' => []
             ]);
         }
     }

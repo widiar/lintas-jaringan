@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('home');
@@ -39,6 +39,8 @@ Route::post('saran', [SiteController::class, 'saran'])->name('saran');
 Route::middleware('auth')->group(function () {
     Route::get('paket/{id}', [SiteController::class, 'paket'])->name('paket');
     Route::post('paket', [SiteController::class, 'beliPaket'])->name('beli.paket');
+
+    Route::post('check-area', [SiteController::class, 'checkArea'])->name('check.area');
 
     Route::get('edit-profile', [AuthController::class, 'editProfile'])->name('edit.profile');
     Route::post('edit-profile', [AuthController::class, 'editProfilePost']);
@@ -155,6 +157,19 @@ Route::middleware(['auth', 'notPelanggan'])->group(function () {
                     Route::get('edit/{id}', 'edit')->name('paket.edit')->middleware(['permission:edit_paket']);
                     Route::put('update/{id}', 'update')->name('paket.update')->middleware(['permission:edit_paket']);
                     Route::delete('delete/{id}', 'destroy')->name('paket.destroy')->middleware(['permission:delete_paket']);
+                });
+            });
+            //manage area
+            Route::controller(AreaController::class)->group(function() {
+                Route::prefix('area/')->group(function(){
+                    Route::get('', 'index')->name('area')->middleware(['permission:view_area']);
+                    // Route::post('checkshow', 'check')->name('area.check');
+                    Route::get('create', 'create')->name('area.create')->middleware(['permission:create_area']);
+                    Route::post('store', 'store')->name('area.store')->middleware(['permission:create_area']);
+                    Route::get('show/{id}', 'show')->name('area.show')->middleware(['permission:detail_area']);
+                    // Route::get('edit/{id}', 'edit')->name('area.edit')->middleware(['permission:edit_area']);
+                    // Route::put('update/{id}', 'update')->name('area.update')->middleware(['permission:edit_area']);
+                    Route::delete('delete/{id}', 'destroy')->name('area.destroy')->middleware(['permission:delete_area']);
                 });
             });
         });

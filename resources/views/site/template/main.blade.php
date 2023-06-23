@@ -29,6 +29,16 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/gauge.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest-maps.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest-maps.css"/>
+
     @yield('css')
 
     <style>
@@ -87,6 +97,9 @@
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    
+    <!-- Select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.full.js') }}"></script>
     <script>
         jQuery.validator.setDefaults({
             errorElement: 'span',
