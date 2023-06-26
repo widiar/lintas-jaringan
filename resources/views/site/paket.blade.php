@@ -35,7 +35,9 @@
                             <div class="form-group">
                                 <label for="text">Kabupaten<span class="text-danger">*</span></label>
                                 <select name="kabupaten" id="kabupaten" class="form-control kabupaten" required @error('kabupaten') is-invalid @enderror>
+                                    @if(!is_null($kabupaten))
                                     <option value="{{ $kabupaten->id }}" selected>{{ $kabupaten->nama }}</option>
+                                    @endif
                                 </select>
                                 @error('kabupaten')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -44,7 +46,9 @@
                             <div class="form-group">
                                 <label for="text">Kecamatan<span class="text-danger">*</span></label>
                                 <select name="kecamatan" id="kecamatan" class="form-control kecamatan" required @error('kecamatan') is-invalid @enderror>
+                                    @if(!is_null($kecamatan))
                                     <option value="{{ $kecamatan->id }}" selected>{{ $kecamatan->nama }}</option>
+                                    @endif
                                 </select>
                                 @error('kecamatan')
                                 <div class="invalid-feedback">{{ $message }}</div>
